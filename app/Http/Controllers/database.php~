@@ -1,0 +1,50 @@
+<?php namespace App\Http\Controllers;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+//use Illuminate\Http\Request;
+use Request;
+use Validator;
+use App\Generalinfo;
+use Auth;
+use App\UserInterest;
+use App\Interest;
+use App\Country;
+use Session;
+use App\Systemtrack;
+use DB;
+
+
+class databaseController extends Controller {
+require 'ormProject.php';
+use Session;
+
+
+$connection=ORM::getInstance();
+$connection->setTable('systemtracks');
+
+$user_id = $_GET['user_id'];
+$spot_id = $_GET['spot_id'];
+$activity_id = $_GET['activity_id'];
+$type_id = $_GET['type_id'];
+
+ $data=array(
+         'user_id'=> $user_id,
+         'spot_id'=> $spot_id,
+         'activity_id'=> $activity_id,
+          'type_id'=> $type_id,
+ );
+
+ $insert=$connection->insert($data);
+ if($insert==1){
+
+echo "<script>window.close();</script>";
+
+ }else{
+
+	echo "not insert into data base :(";
+ }
+
+
+}
