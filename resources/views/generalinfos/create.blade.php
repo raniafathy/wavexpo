@@ -45,6 +45,10 @@
                 <label> address </label>
                 <textarea name="address" class="form-control" rows="3">{{old('address')}}</textarea>
             </div>
+            <div class ="form-group has-success">
+              <label>Upload Image</label>
+              <input type="file" name="image">
+            </div>
 
              <div class="form-group has-success">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
@@ -74,17 +78,22 @@
 
             <div class="form-group has-success">
                <label> Interests</label>
-              <select class="form-control col-md-6" name="interest">
               @foreach ($interests as $interest)
                           @if(old('interest') === $interest->id)
-                            <option value="{{ $interest->id }}" selected="true"> {{ $interest->interest_in }}</option>
-                          @else
-                            <option value="{{ $interest->id }}"> {{ $interest->interest_in }}</option>   
-                          @endif 
+
+ &nbsp;  
+{{ Form::checkbox( 'interest[]' , $interest->id) }}
+
+        {{ Form::label('interest'.$interest->interest_in, $interest->interest_in) }} &nbsp;  
+                           @else
+
+ &nbsp;  
+{{ Form::checkbox( 'interest[]' , $interest->id ) }}
+
+        {{ Form::label('interest'.$interest->interest_in, $interest->interest_in) }} &nbsp;  
+                           @endif 
                   
               @endforeach
-            
-            </select>
            </div>
 
 

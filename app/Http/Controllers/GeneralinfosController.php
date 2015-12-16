@@ -148,7 +148,15 @@ class GeneralinfosController extends Controller {
             $userInterest->interest_id=Request::get('interest');
             $userInterest->save();
 
-			
+			$userInterest = new UserInterest();
+            $userInterest->user_id=$userId;
+		    $userInterest=Request::get('interest');
+             foreach ($userInterest as $userInterest_id)
+   				 {
+          				  //echo $userInterest_id;
+           				  DB::insert('INSERT INTO user_interests (interest_id, user_id) VALUES (?,?)', array($userInterest_id, $userId));
+
+	   			 }
 			return redirect('professionalinfos/create');
 	    }
 	}
@@ -168,12 +176,14 @@ class GeneralinfosController extends Controller {
 		}
 		$interests=Interest::all();
 		$user=Generalinfo::where('user_id',$id)->get();
-		$userInterests=UserInterest::where('user_id',$id)->get();
-		$userInterestsId=$userInterests[0]->interest_id;
-		$interestsuser=Interest::where('id',$userInterestsId)->get();
-
+		// $userInterests=UserInterest::where('user_id',$id)->get();
+		// $userInterestsId=$userInterests[0]->interest_id;
+		// $interestsuser=Interest::where('id',$userInterestsId)->get();
+		$userinterest=UserInterest::where('user_id',$id)->get()->toArray();
+		$userinterest = array_pluck($userinterest, 'interest_id');
+		$this->data['userinterest'] = $userinterest;
 		//var_dump($user[0]); exit();
-		return view('generalinfos.show',compact('user','userInterests','interests','interestsuser'));
+		return view('generalinfos.show',compact('user','interests'),$this->data);
 	}
 
 	/**
@@ -255,7 +265,6 @@ class GeneralinfosController extends Controller {
             	// echo $userInterest_id;
              DB::insert('INSERT INTO user_interests (interest_id, user_id) VALUES (?,?)', array($userInterest_id, $userId));
 
-				    			return redirect('generalinfos/'.$userId);
 
 	    }
 				    			return redirect('generalinfos/'.$userId);

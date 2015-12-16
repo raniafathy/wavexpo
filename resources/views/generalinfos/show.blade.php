@@ -22,12 +22,14 @@
 	              
 	   @foreach ($interests as $interest)
 
-	    @foreach ($interestsuser as $interestsusername)
 
-			@include('widgets.alert', array('class'=>'info', 'message'=> $interestsusername->interest_in ,'icon'=> 'glyphicon glyphicon-search'))
-		@endforeach
-			@endforeach
+ 				              @if(in_array($interest->id, $userinterest))
 
+			@include('widgets.alert', array('class'=>'info', 'message'=> 'interested in "'.$interest->interest_in . '"' ,'icon'=> 'glyphicon glyphicon-search'))
+	
+
+ 					@endif
+ 			@endforeach
 	@endsection
 
 <a title="Basic Info " href="/users/{{$user[0]->user->id}}" class="do"> Basic Info </a>

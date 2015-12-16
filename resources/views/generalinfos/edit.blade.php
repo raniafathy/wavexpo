@@ -33,6 +33,8 @@
                   @endforeach
               </select>
               </div>
+              <br/>
+             <br/>
 
             <div class="form-group has-success">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
@@ -53,11 +55,9 @@
             </div>
             <br/>
             <br/>
-
-            <div class="form-group has-success">
-               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-              <label> Image </label>
-              <input type="text" name="image" value="<?php if (!empty($user[0]->image)) {
+              <div class ="form-group has-success">
+              <label>Image</label>
+              <input type="file" name="image" value="<?php if (!empty($user[0]->image)) {
               echo $user[0]->image;
               } ?> "  class="form-control" id="inputSuccess">
             </div>

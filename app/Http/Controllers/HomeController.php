@@ -342,7 +342,7 @@ echo connection_status();
 	                       //exit;
 
 			  }
-			  sleep(2);
+			  sleep(1);
          }
     }      
 

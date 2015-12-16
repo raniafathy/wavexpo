@@ -23,6 +23,8 @@
                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
               </div>
             </div>
+            <br/>
+            <br/>
 
             <div class="form-group">
               <label class="col-md-4 control-label">E-Mail Address</label>
@@ -30,6 +32,8 @@
                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
               </div>
             </div>
+            <br/>
+            <br/>
 
             <div class="form-group">
               <label class="col-md-4 control-label">Password</label>
@@ -37,6 +41,8 @@
                 <input type="password" class="form-control" name="password">
               </div>
             </div>
+            <br/>
+            <br/>
 
             <div class="form-group">
               <label class="col-md-4 control-label">Confirm Password</label>
@@ -77,36 +83,49 @@
 
 <h1>File Upload</h1>
 
-            <div class="form-group has-success">
+            <div class="form-group">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> File Name</label>
+               <label class="col-md-4 control-label"> File Name</label>
+               <div class="col-md-6">
                 <input type="text" name="filename" class="form-control" id="inputSuccess">
             </div>
+            </div>
+            <br/>
+            <br/>
 
-            <div class="form-group has-success">
+            <div class="form-group">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> Description</label>
+               <label class="col-md-4 control-label"> Description</label>
+                <div class="col-md-6">
+
                 <textarea name="desc" class="form-control" id="inputSuccess"></textarea>
             </div>
+            </div>
+            <br/>
+            <br/>
 
-            <div class="form-group has-success">
+            <div class="form-group">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> Type </label>
+               <label class="col-md-4 control-label"> Type </label>
+                <div class="col-md-6">
                 <input type="text" name="filetype" class="form-control" id="inputSuccess">
             </div>
-
-
-            <div class="row col-md-offset-1">
-            <div class ="form-group">
-              <label class="navtxt">Attach File</label>
-              <input type="file" name="file">
             </div>
-          </div>
-            
+            <br/>
+            <br/>
+
+            <div class ="form-group">
+              <label class="navtxt col-md-4 control-label">Attach File</label>
+              <div class="col-md-6">
+              <input type="file" name="file">
+              </div>
+            </div>
+            <br/>
+            <br/>
       
             
             
-         <button> Add </button>
+<button type="submit" class="btn btn-primary btn-block">Add</button>
          {{ Form::close() }}
         
        

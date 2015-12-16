@@ -22,19 +22,32 @@
             </div>
             <br/>
             <br/>
+
             <div class="form-group has-success">
-               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-              <label> Type </label>
-              <input type="text" name="type" value="{{ $user->type }}" class="form-control" id="inputSuccess" disabled>
-            </div>
+            
+             <label> Type </label>
+
+                    <select   name="type" class="form-control" id="inputSuccess">
+                      <option value="admin" class="form-control" id="inputSuccess" >Admin</option>
+                      <option value="regular" class="form-control" id="inputSuccess" >Regular</option>
+                      <option value="company" class="form-control" id="inputSuccess" >Company</option>
+                    </select>
+           </div>
             <br/>
             <br/>
 
+            <div class="form-group has-success">
+              <label>Password</label>
+                <input type="password" class="form-control" name="password"  value="{{ $user->password }}">
+            </div>
+
+            <br/>
+            <br/>
 
             <div class="form-group has-success">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
               <label> Email </label>
-              <input type="text" name="email" value="{{ $user->email }}" class="form-control" id="inputSuccess" disabled>
+              <input type="text" name="email" value="{{ $user->email }}" class="form-control" id="inputSuccess">
             </div>
             <br/>
             <br/>

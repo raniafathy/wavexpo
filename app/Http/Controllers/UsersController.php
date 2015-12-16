@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Request;
 use Validator;
 use App\User;
+use App\Company;
+
 use Auth;
 use App\Generalinfo;
 use App\Professionalinfo;
@@ -147,6 +149,7 @@ class UsersController extends Controller {
 	        $pInfo->user_id=$user->id;
 	        $pInfo->save();
 
+
 	        $data['email']=Request::get('email');
 	        $data['name']=Request::get('name');
 
@@ -180,7 +183,14 @@ class UsersController extends Controller {
             $userfile->file_id=$file->id;
             $userfile->save();
 
+				if($user->type == "company"){
 
+			        $companyInfo = new Company;
+			        $companyInfo->user_id=$user->id;
+			        $companyInfo->save();
+			        return redirect('companies');
+
+			    }
 			return redirect('users');
 	    }
 	}
@@ -243,8 +253,19 @@ class UsersController extends Controller {
 			$id=Request::get('id');
 			$user=User::find($id);
 			$user->name=Request::get('name');
+			$user->email = Request::get('email');
+		    $user->type = Request::get('type');
+		    $user->password =  bcrypt(Request::get('password'));
 			$user->save();
-			return redirect('/');
+			if($user->type == "company"){
+					$companyInfo = new Company;
+	      			$companyInfo->user_id=$user->id;
+	        		$companyInfo->save();
+	        		return redirect('companies');
+
+
+			}
+			return redirect('users');
 	    }
 	}
 

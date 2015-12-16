@@ -1,71 +1,116 @@
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>  
 
 <meta name="_token" content="{{ app('Illuminate\Encryption\Encrypter')->encrypt(csrf_token()) }}" />
+<a href="/charts" id="navigate"> click here </a>
 
 
 <script type="text/javascript">
+$(document).ready(function(){
 
-window.onload = function() {
-    
-            $.ajaxSetup({
-                headers: {
-                    'X-XSRF-Token': $('meta[name="_token"]').attr('content')
-                }
-            });
+    $('a').on('mousedown', stopNavigate);
 
- };
+    $('a').on('mouseleave', function () {
+           $(window).on('beforeunload', function(){
+      return 'Are you sure you want to leave?';
+});
 
+$(window).on('unload', function(){
 
-setInterval(function(){ 
-    
-     $.ajax({
-        url: '/home/outFromSystem' ,
-        type: 'POST',
-        data: {  
-             
-            },
-        success: function(result) {
-                    console.log(result);
-                  },
-        error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-               }
+         logout();
 
-
-
-
-
+});
     });
+});
+
+function stopNavigate(){    
+    $(window).off('beforeunload');
+}
+
+// window.onload = function() {
+    
+//             $.ajaxSetup({
+//                 headers: {
+//                     'X-XSRF-Token': $('meta[name="_token"]').attr('content')
+//                 }
+//             });
+
+//  };
 
 
-}, 50000);
+// setInterval(function(){ 
+    
+//      $.ajax({
+//         url: '/home/outFromSystem' ,
+//         type: 'POST',
+//         data: {  
+             
+//             },
+//         success: function(result) {
+//                     console.log(result);
+//                   },
+//         error: function(jqXHR, textStatus, errorThrown) {
+//                     console.log(errorThrown);
+//                }
+//     });
+
+
+// }, 50000);
 
     
-window.onbeforeunload = function () {
+// window.onbeforeunload = function () {
 
- //alert('jj'); 
+//  alert('jj'); 
 
-  $.ajax({
-        url: '/home/outFromSystem' ,
-        type: 'POST',
-        data: {  
+//   $.ajax({
+//         url: '/home/outFromSystem' ,
+//         type: 'POST',
+//         data: {  
              
-            },
-        success: function(result) {
-                    console.log(result);
-                  },
-        error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-               }
+//             },
+//         success: function(result) {
+//                     console.log(result);
+//                   },
+//         error: function(jqXHR, textStatus, errorThrown) {
+//                     console.log(errorThrown);
+//                }
 
 
+//        // alert('You have gone away!');
 
 
-
-    });
+//     });
         
    
+// }
+
+/////////////////////////////////////////////////////////////////
+
+
+$(document).ready(function(){
+
+    $('a').on('mousedown', stopNavigate);
+
+    $('a').on('mouseleave', function () {
+           $(window).on('beforeunload', function(){
+                  return 'Are you sure you want to leave?';
+           });
+    });
+});
+
+function stopNavigate(){    
+    $(window).off('beforeunload');
 }
+And to get the Leave message alert will be,
+
+$(window).on('beforeunload', function(){
+      return 'Are you sure you want to leave?';
+});
+
+$(window).on('unload', function(){
+
+         logout();
+
+});
 
 </script>
 
