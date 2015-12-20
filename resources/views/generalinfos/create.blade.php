@@ -65,7 +65,7 @@
               <div class="form-group has-success">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
                <label> DOB</label>
-                <input type="text" name="dob" class="form-control" id="inputSuccess" value="{{old('dob')}}">
+                <input type="date" name="dob" class="form-control" id="inputSuccess" value="{{old('dob')}}">
              </div>
 
                 <div class="form-group has-success">

@@ -15,7 +15,21 @@
 // {
 // 	return View::make('home');
 // });
+
+Route::get('/register', function()
+{
+	return View::make('index');
+});
+
 Route::get('/test/{spot_id}/{activity_id}/{type_id}','databaseController@insertTrackingSystemData' );
+
+
+Route::get('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
+
+Route::get('/generalinfos/editimage', function()
+{
+	return View::make('editimage');
+});
 
 Route::get('/charts', function()
 {
@@ -68,10 +82,7 @@ Route::get('/blank', function()
 	return View::make('blank');
 });
 
-// Route::get('/login', function()
-// {
-// 	return View::make('login');
-// });
+ //Route::get('/register', 'UsersController@createRegister');
 
 Route::get('/documentation', function()
 {

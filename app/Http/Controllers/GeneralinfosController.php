@@ -134,14 +134,33 @@ class GeneralinfosController extends Controller {
 
 		    $gInfo->city = Request::get('city');
 		    $gInfo->dob = Request::get('dob');
-		    $gInfo->image = Request::get('image');
+		    //$gInfo->image = Request::get('image');
 		    $gInfo->address = Request::get('address');
 		    $gInfo->phone = Request::get('phone');
 		    $gInfo->anotherphone = Request::get('anotherphone');
 		    $gInfo->skypename = Request::get('skypename');
 		    $gInfo->howhearaboutus = Request::get('howhearaboutus');
-
+		    if (Request::hasFile('image')) { 
+				$destination='uploads/';
+				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+				Request::file('image')->move($destination,$imagename);
+				$file->image=$imagename;
+			}else{
+				$file->image=Request::get('image');
+			}
 		    $gInfo->save();
+
+		  //   if (Request::hasFile('image'))
+				// {
+				// 	$Image = Request::file('image');
+				// 	$imagename = $Image->getClientOriginalExtension();
+
+    //         		$path = public_path('uploads/' . $imagename);
+ 			// 		Image::make($image->getRealPath())->resize(200, 200)->save($path);
+    //             	$gInfo->image = $imagename;
+    //            		$gInfo->save();
+				// }
+
 
 		    $userInterest = new UserInterest();
             $userInterest->user_id=$userId;
@@ -229,6 +248,7 @@ class GeneralinfosController extends Controller {
 	        return redirect()->back()->withErrors($v->errors())
 	        						 ->withInput();
 	    }else{
+
             $userId=Request::get('id');
 	    	$gInfo=Generalinfo::where('user_id',$userId)->get();
 
@@ -250,6 +270,18 @@ class GeneralinfosController extends Controller {
 		    $gInfo->anotherphone = Request::get('anotherphone');
 		    $gInfo->skypename = Request::get('skypename');
 		    $gInfo->howhearaboutus = Request::get('howhearaboutus');
+		    if (Request::hasFile('image')) { 
+				$destination= 'uploads/';
+				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+				Request::file('image')->move($destination,$imagename);
+				// $path = Request::file('image')->getRealPath();
+				// echo $path;
+				 //$path = public_path('upload/' . $imagename);
+ 		  		//Image::make(Request::file('image')->getRealPath())->resize(200, 200)->save($path);
+				$gInfo->image=$imagename;
+			}else{
+				$gInfo->image=Request::get('image');
+			}
 
 		    $gInfo->save();
             
@@ -278,9 +310,41 @@ class GeneralinfosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function editProfileImage($id)
 	{
-		//
-	}
+		$v = Validator::make(Request::all(), [
+        'image' => 'required|max:30',
+        ]);
+       
+	    if ($v->fails())
+	    {
+	        return redirect()->back()->withErrors($v->errors())
+	        						 ->withInput();
+	    }else{
+            $userId=Request::get('id');
+	    	$gInfo=Generalinfo::where('user_id',$userId)->get();
 
+	    	$gInfoId=$gInfo[0]->id;
+
+		$gInfo=Generalinfo::find($gInfoId);
+		if (Request::hasFile('image')) { 
+				$destination= 'uploads/';
+				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+				Request::file('image')->move($destination,$imagename);
+				$gInfo->image=$imagename;
+			}else{
+				$gInfo->image=Request::get('image');
+			}
+
+		    $gInfo->save();
+		  	return redirect('generalinfos/'.$userId);
+
+
+	}
+}
+
+	public function destroy($id)
+		{
+			//
+		}
 }

@@ -15,7 +15,27 @@
 // {
 // 	return View::make('home');
 // });
+
+// Route::get('/register', function()
+// {
+// 	return View::make('index');
+// });
+
+
+Route::get('register/verify/{confirmationCode}', [
+    'as' => 'confirmation_path',
+    'uses' => 'Auth\AuthController@confirm'
+]);
+
 Route::get('/test/{spot_id}/{activity_id}/{type_id}','databaseController@insertTrackingSystemData' );
+
+
+Route::get('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
+
+Route::get('/generalinfos/editimage', function()
+{
+	return View::make('editimage');
+});
 
 Route::get('/charts', function()
 {
@@ -67,11 +87,11 @@ Route::get('/blank', function()
 {
 	return View::make('blank');
 });
+Route::get('/register', array('as' => 'user.createRegister', 'uses' => 'Auth\AuthController@createRegister'));
 
-// Route::get('/login', function()
-// {
-// 	return View::make('login');
-// });
+ //Route::get('/register', 'AuthController@createRegister');
+ // Route::post('/Auth/store', 'AuthController@store');
+
 
 Route::get('/documentation', function()
 {
@@ -85,6 +105,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+//Route::post('users/createuser','UsersController@createuser');
+
+Route::post('/signin', array('as' => 'user.createuser', 'uses' => 'Auth\AuthController@createuser'));
 
 Route::post('/home/outFromSystem','HomeController@outFromSystem');
 
