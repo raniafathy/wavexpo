@@ -6,8 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDmakerColumn' => $baseDir . '/database/migrations/2015_12_21_133922_add_Dmaker_column.php',
     'AddLikedToUserFiles' => $baseDir . '/database/migrations/2015_12_15_114850_add_liked_to_user_files.php',
     'AddToUser' => $baseDir . '/database/migrations/2015_12_20_122233_add_to_user.php',
+    'ChangeDmakerColumn' => $baseDir . '/database/migrations/2015_12_21_133313_change_Dmaker_Column.php',
     'CreateActivitiesTable' => $baseDir . '/database/migrations/2015_08_31_115348_create_activities_table.php',
     'CreateBoothFilesTable' => $baseDir . '/database/migrations/2015_10_20_084239_create_booth_files_table.php',
     'CreateBoothsTable' => $baseDir . '/database/migrations/2015_09_08_084641_create_booths_table.php',
@@ -44,6 +46,7 @@ return array(
     'CreateUserInterestsTable' => $baseDir . '/database/migrations/2015_08_31_125328_create_user_interests_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
+    'DropColumnLevel' => $baseDir . '/database/migrations/2015_12_21_133126_drop_Column_Level.php',
     'DropEventSeries' => $baseDir . '/database/migrations/2015_12_15_113742_drop_Event_Series.php',
     'DropSection' => $baseDir . '/database/migrations/2015_12_15_114248_drop_Section.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

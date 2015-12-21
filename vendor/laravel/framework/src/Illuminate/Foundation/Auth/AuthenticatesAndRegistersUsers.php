@@ -112,6 +112,15 @@ trait AuthenticatesAndRegistersUsers {
 		{
 			Session::put('sessionstart', date("Y-m-d H:i:s"));
 			Session::put('sessiontimer', date("Y-m-d H:i:s"));
+			if (Auth::user()->type == 'company') {
+
+					return redirect('/company');
+
+					}      
+
+					        
+					   		
+
             //thread
            // $threadedObj  = new Sessionclass();
            // $threadedObj->start();
@@ -206,12 +215,22 @@ trait AuthenticatesAndRegistersUsers {
 		$now = new DateTime();
 		$tracklogin->login_at=$now;
 		$tracklogin->save();
+		// if (Auth::user()->type == 'company') {
 
 
+		//         $this->redirectTo='/company';
+		//         		return $this->redirectTo;
+
+		        
+		//    		 }
+			
 		if (property_exists($this, 'redirectPath'))
 		{
+				
 			return $this->redirectPath;
 		}
+
+		
 
 		return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
 	}

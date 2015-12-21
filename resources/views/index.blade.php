@@ -84,8 +84,9 @@
                         <div class="col-sm-6 col-sm-offset-3 form-box">
 
                         	
-{{ Form::open(array('url' => '/signin','method'=>'post','role'=>'form','files' => true))}}
-         @if (count($errors) > 0)
+               {{ Form::open(array('url'=>'/signin','class'=>'registration-form','role'=>'form','method'=>'post','files' => true)) }}
+
+ @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong> There were some problems with your input.<br><br>
                             <ul>
@@ -97,7 +98,7 @@
           @endif
          <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         		
-                        		<fieldset>
+                        		<fieldset style="display: block;">
 		                        	<div class="form-top">
 		                        		<div class="form-top-left">
 		                        			<h3>Step 1 / 3</h3>
@@ -138,14 +139,14 @@
 								                        <input type="radio" name="type" id="optionsRadiosInline1" value="regular" checked> Visitor
 								                    </label>
 								                    <label class="radio-inline">
-								                        <input type="radio" name="type" id="optionsRadiosInline2" value="admin" >Admin
+								                        <input type="radio" name="type" id="optionsRadiosInline2" value="company" >Exhibitor
 								                    </label>
 								                    @else
 								                     <label class="radio-inline">
 								                        <input type="radio" name="type" id="optionsRadiosInline1" value="regular" > Visitor
 								                    </label>
 								                    <label class="radio-inline">
-								                        <input type="radio" name="type" id="optionsRadiosInline2" value="admin" checked>Admin
+								                        <input type="radio" name="type" id="optionsRadiosInline2" value="company" checked>Exhibitor
 								                    </label>
 								                    @endif
 								                   
@@ -158,6 +159,10 @@
 				                        <button type="button" class="btn btn-next">Next</button>
 				                    </div>
 			                    </fieldset>
+
+
+							
+
 			                    
 			                    <fieldset>
 		                        	<div class="form-top">
@@ -193,8 +198,9 @@
 							             <div class="form-group has-success">
 							                <!-- <label class="control-label" for="inputError">Input with error</label> -->
 							                <label> address </label>
-							                <textarea name="address" class="form-control" rows="3">{{old('address')}}</textarea>
+							                <input name="address" class="form-control" value="{{old('address')}}">
 							            </div>
+
 							            <div class ="form-group has-success">
 							              <label>Upload Image</label>
 							              <input type="file" name="image">
@@ -205,6 +211,7 @@
 							               <label> phone</label>
 							                <input type="number" name="phone" class="form-control" id="inputSuccess" value="{{old('phone')}}">
 							             </div>
+
 							             <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
 							               <label> Another Phone</label>
@@ -222,7 +229,22 @@
 							               <label> DOB</label>
 							                <input type="date" name="dob" class="form-control" id="inputSuccess" value="{{old('dob')}}">
 							             </div>
+				                    	<div class="form-group has-success">
+							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
+							               <label> Current Company</label>
+							                <input type="text" name="currentjob" class="form-control" id="inputSuccess" value="{{old('currentlyjob')}}">
+							            </div>
 
+							             <div class="form-group has-error">
+							                <!-- <label class="control-label" for="inputError">Input with error</label> -->
+							                <label> Current Position </label>
+							                <input name="title" class="form-control" value="{{old('dob')}}" >
+							            </div>
+										<div class="form-group has-success">
+							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
+							               <label> Facebook Account </label>
+							                <input type="text" name="facebook" class="form-control" id="inputSuccess" value="{{old('facebook')}}">
+							             </div>
 							                <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
 							               <label> How Hear about us !?</label>
@@ -264,18 +286,8 @@
 		                        			<i class="fa fa-twitter"></i>
 		                        		</div>
 		                            </div>
-		                            <div class="form-bottom">
-				                    	<div class="form-group has-success">
-							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-							               <label> Current Job</label>
-							                <input type="text" name="currentjob" class="form-control" id="inputSuccess" value="{{old('currentlyjob')}}">
-							            </div>
+		                            	 <div class="form-bottom">
 
-							             <div class="form-group has-error">
-							                <!-- <label class="control-label" for="inputError">Input with error</label> -->
-							                <label> Title </label>
-							                <textarea name="title" class="form-control" rows="3">{{old('dob')}}</textarea>
-							            </div>
 
 							             <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
@@ -292,7 +304,11 @@
 							              <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
 							               <label> D_maker </label>
-							                <input type="text" name="d_maker" class="form-control" id="inputSuccess" value="{{old('d_maker')}}">
+							               <select class="form-control col-md-6" name="d_maker" id="inputSuccess">
+							                            <option value="yes">Yes</option>
+							                            <option value="no">No</option>   
+							                  							            
+							            </select>
 							             </div>
 
 							             <div class="form-group has-success">
@@ -319,13 +335,7 @@
 							               <label> Fax Account </label>
 							                <input type="text" name="fax" class="form-control" id="inputSuccess" value="{{old('d_maker')}}">
 							             </div>
-
-
-							             <div class="form-group has-success">
-							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-							               <label> Facebook Account </label>
-							                <input type="text" name="facebook" class="form-control" id="inputSuccess" value="{{old('facebook')}}">
-							             </div>
+							             
 
 							             <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
@@ -351,11 +361,7 @@
 							                <input type="text" name="language" class="form-control" id="inputSuccess" value="{{old('language')}}">
 							             </div>
 							 
-							             <div class="form-group has-success">
-							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-							               <label> Language Level </label>
-							                <input type="text" name="level" class="form-control" id="inputSuccess" value="{{old('level')}}">
-							             </div>
+							           
 				                        <button type="button" class="btn btn-previous">Previous</button>
 				                       
 				                       <button type="submit" class="btn">Sign me up!</button>
@@ -363,8 +369,8 @@
 
 				                    </div>
 			                    </fieldset>
-		                             {{ Form::close() }}
 
+         {{ Form::close() }}
 		                    
                         </div>
                     </div>

@@ -14,7 +14,7 @@ use App\UserFile;
 use App\User;
 use App\Professionalinfo;
 use Mail;
-
+use App\Company;
 use App\Country;
 use Session;
 use App\Systemtrack;
@@ -42,6 +42,8 @@ class AuthController extends Controller {
 	 * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
 	 * @return void
 	 */
+	//protected $redirectPath = '/company';
+
 	public function __construct(Guard $auth, Registrar $registrar)
 	{
 		$this->auth = $auth;
@@ -49,23 +51,18 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => ['getLogout','createuser','createRegister','confirm']]);
 	}
-
+		
+	
 	public function createRegister(){
 
 		$countries= Country::all();
 		$interests= Interest::all();
 		return view('index', compact('countries','interests'));
-
-	
-
-
 	}
 
 	public function createuser()
 	{
 		
-		//
-
 		$confirmation_code = str_random(30);
 
 		$v = Validator::make(Request::all(), [
@@ -97,6 +94,14 @@ class AuthController extends Controller {
 			$gInfo->skypename=Request::get('skypename');
 			$gInfo->howhearaboutus=Request::get('howhearaboutus');
 			$gInfo->dob=Request::get('dob');
+			if (Request::hasFile('image')) { 
+				$destination= 'uploads/';
+				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+				Request::file('image')->move($destination,$imagename);
+				$gInfo->image=$imagename;
+			}
+			$gInfo->save();
+
 			$userInterest = new UserInterest();
             $userInterest->user_id=$user->id;
 		    $userInterest=Request::get('interest');
@@ -106,7 +111,6 @@ class AuthController extends Controller {
            				  DB::insert('INSERT INTO user_interests (interest_id, user_id) VALUES (?,?)', array($userInterest_id, $user->id));
 
 	   			 }
-			$gInfo->save();
 			$pInfo = new Professionalinfo;
 	        $pInfo->user_id=$user->id;
 	        $pInfo->currentjob=Request::get('currentjob');
@@ -123,8 +127,15 @@ class AuthController extends Controller {
 	        $pInfo->linkedIn=Request::get('linkedIn');
 			$pInfo->ownwebsite=Request::get('ownwebsite');
 	        $pInfo->language=Request::get('language');
-	        $pInfo->level=Request::get('level');
 	        $pInfo->save();
+	        if($user->type == "company"){
+
+			        $companyInfo = new Company;
+			        $companyInfo->user_id=$user->id;
+			        $companyInfo->save();
+			       // return redirect('companies');
+
+			    }
 
 
 	        $data['email']=Request::get('email');
@@ -139,37 +150,7 @@ class AuthController extends Controller {
                $message->to($data['email']);
          });
 
-//return redirect()->action('UserFilesController@store', [$user->id,]);
-
-	        // File Storage 
-
-	  //       $file = new File;
-		 //    $file->name=Request::get('filename');
-		 //    $file->desc=Request::get('desc');
-		 //    $file->type=Request::get('filetype');
-			// if (Request::hasFile('file')) { 
-			// 	$destination='files/';
-			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-			// 	Request::file('file')->move($destination,$filename);
-			// 	$file->file=$filename;
-			// }else{
-			// 	$file->file=Request::get('file');
-			// }
-   //          $file->save();
-
-   //          $userfile= new UserFile;
-   //          $userfile->user_id=$user->id;
-   //          $userfile->file_id=$file->id;
-   //          $userfile->save();
-
-				if($user->type == "company"){
-
-			        $companyInfo = new Company;
-			        $companyInfo->user_id=$user->id;
-			        $companyInfo->save();
-			        return redirect('companies');
-
-			    }
+				
 			return redirect('users');
 	    }
 	}
@@ -184,19 +165,6 @@ public function confirm($confirmation_code)
         DB::table('users')
             ->where('confirmation_code', $confirmation_code)
             ->update(['confirmed' => 1,'confirmation_code' =>null]);
-
-        // $user = User::where('confirmation_code',$confirmation_code);
-
-        // if ( ! $user)
-        // {
-        //    // throw new InvalidConfirmationCodeException;
-        // }
-
-        // $user->confirmed = 1;
-        // $user->confirmation_code = null;
-        // $user->save();
-
-        //Flash::message('You have successfully verified your account.');
 
         return redirect('/auth/login');
     }

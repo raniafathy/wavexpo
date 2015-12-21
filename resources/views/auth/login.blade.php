@@ -36,7 +36,11 @@
 				     </label>
                                 </div>
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
-				
+                                <h5>
+                                    Please Register From Here!
+                                    <a class=" btn btn-primary" href="/register">Register</a>
+                                </h5>
+
                             </fieldset>
                         </form>
                     

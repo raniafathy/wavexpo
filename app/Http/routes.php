@@ -30,7 +30,7 @@ Route::get('register/verify/{confirmationCode}', [
 Route::get('/test/{spot_id}/{activity_id}/{type_id}','databaseController@insertTrackingSystemData' );
 
 
-Route::get('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
+Route::post('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
 
 Route::get('/generalinfos/editimage', function()
 {
@@ -87,6 +87,13 @@ Route::get('/blank', function()
 {
 	return View::make('blank');
 });
+Route::get('/dashboard', 'HomeController@index');
+
+Route::get('/company', function()
+{
+	return View::make('company');
+});
+
 Route::get('/register', array('as' => 'user.createRegister', 'uses' => 'Auth\AuthController@createRegister'));
 
  //Route::get('/register', 'AuthController@createRegister');

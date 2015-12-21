@@ -4,6 +4,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
+//use App\Http\Requests;
+//use App\Http\Controllers\Controller;
+
 use Request;
 use Validator;
 use App\Generalinfo;
@@ -279,9 +282,10 @@ class GeneralinfosController extends Controller {
 				 //$path = public_path('upload/' . $imagename);
  		  		//Image::make(Request::file('image')->getRealPath())->resize(200, 200)->save($path);
 				$gInfo->image=$imagename;
-			}else{
-				$gInfo->image=Request::get('image');
 			}
+			// else{
+			// 	$gInfo->image=Request::get('image');
+			// }
 
 		    $gInfo->save();
             
@@ -321,23 +325,24 @@ class GeneralinfosController extends Controller {
 	        return redirect()->back()->withErrors($v->errors())
 	        						 ->withInput();
 	    }else{
-            $userId=Request::get('id');
-	    	$gInfo=Generalinfo::where('user_id',$userId)->get();
-
+	    	Auth::User()->id=$id;
+           // $userId=Request::get('id');
+            //echo $userId;
+	    	$gInfo=Generalinfo::where('user_id',$id)->get();
 	    	$gInfoId=$gInfo[0]->id;
-
+		echo $gInfoId;
 		$gInfo=Generalinfo::find($gInfoId);
+		
+
 		if (Request::hasFile('image')) { 
 				$destination= 'uploads/';
 				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
 				Request::file('image')->move($destination,$imagename);
 				$gInfo->image=$imagename;
-			}else{
-				$gInfo->image=Request::get('image');
 			}
 
 		    $gInfo->save();
-		  	return redirect('generalinfos/'.$userId);
+		  	return redirect('generalinfos/'.$id);
 
 
 	}

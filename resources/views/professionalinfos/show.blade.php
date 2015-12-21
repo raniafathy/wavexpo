@@ -22,7 +22,6 @@
 	@include('widgets.alert', array('class'=>'warning', 'message'=> $user[0]->linkedIn,'icon'=> 'glyphicon glyphicon-cog'))
 	@include('widgets.alert', array('class'=>'success', 'message'=> $user[0]->ownwebsite, 'icon'=> 'user'))
 	@include('widgets.alert', array('class'=>'info', 'message'=> $user[0]->language ,'icon'=> 'glyphicon glyphicon-search'))
-	@include('widgets.alert', array('class'=>'warning', 'message'=> $user[0]->level,'icon'=> 'glyphicon glyphicon-cog'))
 	@endsection
 
 <a title="General Info " href="/generalinfos/{{$user[0]->user->id}}" class="do"> General Info </a>
