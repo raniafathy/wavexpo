@@ -123,6 +123,7 @@ $(document).ready(function(){
 			opt.value = 0;
 		    opt.innerHTML = 'Select Booth';
 		    sel.appendChild(opt);
+
 			for(i = 0; i<booths.length; i++) { 
 
 			    opt = document.createElement('option');
@@ -130,12 +131,18 @@ $(document).ready(function(){
 			    if(booths[i].exhibition_event_id == this.value){
 				    opt.value = booths[i].id;
 				    opt.innerHTML = booths[i].name;
+
 				    sel.appendChild(opt);
+
 			    }
 			}
+	           				div.appendChild(sel);
+	           				$("#event").change(function () {
 
 			sel.onchange=function(){
+
 					for (var i=0; i < systemtrack_users.length; i++) {
+
 		           	if (systemtrack_users[i].type_id==this.value) {
 		           	
 				            $("#booths").find('tbody')
@@ -153,18 +160,18 @@ $(document).ready(function(){
 						            
 						        ).append($('<td>')
 						            
-						          .text(systemtrack_users[i].leave_at)
 						            
 						        )
 						    );  
-		           	}
+		          	}
 
 
 	           }
 
+
 			};
 
-			div.appendChild(sel);
+
 
 		 });
 

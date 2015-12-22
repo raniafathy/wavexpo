@@ -16,7 +16,7 @@ use App\Exhibitor;
 use App\ExhibitionEvent;
 use App\Systemtrack;
 use App\Spot;
-
+use DB;
 use Session;
 
 use App\File;
@@ -169,9 +169,24 @@ class BoothsController extends Controller {
 	public function show($id)
 	{
 		//
+		if (Session::has('systemtrack_booth_id'))
+		{
+			$systemtrack_booth_id_value = Session::get('systemtrack_booth_id');
+			$systemtrack_booth=Systemtrack::find($systemtrack_booth_id_value);
+			if($systemtrack_booth->leave_at==null){
+
+				DB::table('systemtracks')
+	            ->where('id', $systemtrack_booth_id_value)
+	            ->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+						//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+			      }
+		}
+
 		$booth=Booth::find($id);
 
 		$systemtrack=new Systemtrack;
+		      
         $systemtrack->user_id=Auth::User()->id;
         $systemtrack->spot_id=$booth->spot_id;
         $systemtrack->do=Auth::User()->name.' '.'visit'.' '.$booth->name.' Booth '.'at'.' '.date("Y-m-d H:i:s");

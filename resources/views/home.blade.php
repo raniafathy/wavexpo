@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/exhibitionevents/{{$exhibitionevent->id}}">
+                        <a href="/eventpage/{{$exhibitionevent->id}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/exhibitionevents/{{$exhibitionevent->id}}">
+                        <a href="/eventpage/{{$exhibitionevent->id}}">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -80,6 +80,12 @@
 
             </div>
          
+                            <div>
+
+                                <a href="/exhibitionevents"><h1>See More Exhibitions Event</h1></a>
+
+                                <div class="clearfix"></div>
+                            </div>
             
             <!-- /.row -->
             <div class="row">

@@ -29,6 +29,7 @@ Route::get('register/verify/{confirmationCode}', [
 
 Route::get('/test/{spot_id}/{activity_id}/{type_id}','databaseController@insertTrackingSystemData' );
 
+Route::get('/eventpage/{id}','ExhibitioneventsController@showEventPage' );
 
 Route::post('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
 
