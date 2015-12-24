@@ -156,6 +156,7 @@ function search(){
     			var container = document.getElementById('container');
     			 container.innerHTML = "";
     			 container.innerHTML = result;
+                 alert(result);
                 //convert refreshing pagination to ajax
                // paginateWithAjax();
 

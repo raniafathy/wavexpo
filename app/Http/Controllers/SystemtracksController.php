@@ -248,4 +248,31 @@ class SystemtracksController extends Controller {
 
 	}
 
+
+	public function ajaxSearchForBoothTrack(){
+
+		//if(Request::ajax){
+
+		$boothId=Request::get('optValue');
+		//echo $boothId;
+		$booth=Booth::find($boothId);
+	//}
+
+		// $exhibitionevents=ExhibitionEvent::all();
+		// $users=User::all();
+		// $booths=Booth::all();
+
+		$systemtracks=Systemtrack::where('type','booth')->get();
+		//$systemtracks=Systemtrack::where('type','booth')->get();
+		$systemtrack_users = DB::table('systemtracks')->where('systemtracks.type','booth')
+                                    ->join('users', 'users.id', '=', 'systemtracks.user_id')->get();
+
+
+	//	echo json_encode(array("value" => $booth, "value2" => $systemtracks));
+
+	   return view('AdminCP.reports.systemtracks.ajaxbooth',compact('booth','systemtracks','systemtrack_users'));
+
+
+	}
+
 }

@@ -213,3 +213,5 @@ Route::get('/systemtracks/alluserhistory','SystemtracksController@alluserhistory
 Route::get('/systemtracks/exhibitionevent','SystemtracksController@exhibitionevent');
 
 Route::get('/systemtracks/booth','SystemtracksController@booth');
+
+Route::post('/systemtracks/ajaxSearchForBoothTrack','SystemtracksController@ajaxSearchForBoothTrack');
