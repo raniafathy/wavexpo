@@ -84,7 +84,8 @@ class ExhibitionsController extends Controller {
 
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:exhibitors',
-      
+        'desc' => 'required',
+
        
         ]);
        

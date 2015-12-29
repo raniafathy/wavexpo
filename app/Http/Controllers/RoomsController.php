@@ -85,6 +85,8 @@ class RoomsController extends Controller {
 		//
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:rooms',
+        'desc' => 'required',
+
         'spot_id' => 'required',
         'event_id' => 'required',
       

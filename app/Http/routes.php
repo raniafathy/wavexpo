@@ -31,12 +31,9 @@ Route::get('/test/{spot_id}/{activity_id}/{type_id}','databaseController@insertT
 
 Route::get('/eventpage/{id}','ExhibitioneventsController@showEventPage' );
 
-Route::post('/generalinfos/{id}/image','GeneralinfosController@editProfileImage' );
 
-Route::get('/generalinfos/editimage', function()
-{
-	return View::make('editimage');
-});
+Route::get('/generalinfos/editimage/{id}','GeneralinfosController@editImage'
+);
 
 Route::get('/charts', function()
 {
@@ -118,6 +115,7 @@ Route::controllers([
 Route::post('/signin', array('as' => 'user.createuser', 'uses' => 'Auth\AuthController@createuser'));
 
 Route::post('/home/outFromSystem','HomeController@outFromSystem');
+Route::post('/home/sessionTime','HomeController@sessionTime');
 
 
 Route::get('/', 'HomeController@index');

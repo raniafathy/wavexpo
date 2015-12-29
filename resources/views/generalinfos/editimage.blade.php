@@ -1,3 +1,4 @@
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>  
 
 
 
@@ -7,7 +8,6 @@
 @section('page_heading','Update Interest')
 
 @section('section')
-
     {{ Form::open(array('class' => 'form-inline', 'method' => 'PATCH', 'route' => array('generalinfos.update'), 'files' => true)) }}         
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -23,13 +23,16 @@
        
 
 
-
 <div class ="form-group has-success">
               <label>Upload Image</label>
               <input type="file" name="image">
             </div>
+            </br>
+            </br>
 
             <input type="hidden" name="id" value="{{ $user[0]->user->id }}">
-            <button> Edit </button>
+            <div class ="form-group has-success">
+            <button class=" btn btn-primary"> Edit </button>
+            </div>
 
 @stop

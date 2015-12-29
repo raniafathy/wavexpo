@@ -218,6 +218,14 @@ form.registration-form fieldset {
 
 }
 
+#login-screen
+{
+    position:absolute;
+  z-index:9000;
+  background-color:#000;
+  display:block;
+}
+
 
 /* Retina-ize images/icons */
 

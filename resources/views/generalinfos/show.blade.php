@@ -11,7 +11,7 @@
   
 <img src="{{url()}}/uploads/{{ $user[0]->image}}" alt="" width="200" height="200" />
 </br>
-<a href="/generalinfos/editimage">Update Profile Picture</a>
+<a href="/generalinfos/editimage/{{$user[0]->user->id}}">Update Profile Picture</a>
 	</br>
 		</br>
 

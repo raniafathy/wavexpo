@@ -80,6 +80,7 @@ class SectionsController extends Controller {
 		//
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:sections',
+        'desc' => 'required',
       
        
         ]);

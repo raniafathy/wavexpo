@@ -13,9 +13,51 @@
 	<meta content="" name="author"/>
   
 	<link rel="stylesheet" href="{{ asset("assets/stylesheets/styles.css") }}" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+
+
 </head>
-<body>
+<body onmousemove="logTest()">
+
+
 	@yield('body')
 	<script src="{{ asset("assets/scripts/frontend.js") }}" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>  
 </body>
+<script>
+
+function logTest(){
+	 
+						$.ajaxSetup({
+                                 headers: {
+                                     'X-XSRF-Token': $('meta[name="_token"]').attr('content')
+                                 }
+                             });
+
+
+                        $.ajax({
+
+                            url: '/home/sessionTime' ,
+                             type: 'POST',
+                             data: {  
+                            },
+                        success: function(result) {
+                           // alert(result);
+                             
+
+                            console.log(result);
+
+                        },
+
+                        error: function(jqXHR, textStatus, errorThrown) {
+
+                            console.log(errorThrown);
+
+                         //   alert(errorThrown);
+
+                              }
+                    });
+
+}
+</script>
 </html>

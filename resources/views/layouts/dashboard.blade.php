@@ -1,40 +1,151 @@
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>  
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+ 
+
+
 
 <meta name="_token" content="{{ app('Illuminate\Encryption\Encrypter')->encrypt(csrf_token()) }}" />
-<a href="/charts" id="navigate"> click here </a>
 
 
 <script type="text/javascript">
-$(document).ready(function(){
 
-    $('a').on('mousedown', stopNavigate);
 
-    $('a').on('mouseleave', function () {
-           $(window).on('beforeunload', function(){
-      return 'Are you sure you want to leave?';
-});
+window.setInterval(function(){ 
+    
+     $.ajax({
+        url: '/home/outFromSystem' ,
+        type: 'POST',
+        data: {  
+             
+            },
+        success: function(result) {
 
-$(window).on('unload', function(){
+            if(result.indexOf("fail") > -1){
 
-         logout();
+                    console.log(result);
 
-});
+
+            }else{
+            document.getElementsByTagName("body")[0].style.visibility='hidden';
+
+            document.getElementById('login-screen').style.visibility='visible';
+            window.location="http://localhost:8000/auth/login";
+
+
+            }
+                    console.log(result);
+                    //alert(result);
+                  },
+        error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+               }
     });
-});
 
-function stopNavigate(){    
-    $(window).off('beforeunload');
+
+}, 9000);
+
+
+
+
+
+
+
+
+ function test(){
+
+
+var count=0;
+
+count= count+1;
+
+//alert(count);
+
+
 }
 
-// window.onload = function() {
-    
-//             $.ajaxSetup({
-//                 headers: {
-//                     'X-XSRF-Token': $('meta[name="_token"]').attr('content')
-//                 }
-//             });
+// window.setInterval(function(){
+//     // alert();
+// var body = document.getElementsByTagName("body")[0];
 
-//  };
+// body.addEventListener("onbeforeunload", add());
+
+// function add() {
+//         alert("it works!");
+// };
+                    
+//                              
+
+                  
+
+
+// }, 3*60*1000);
+
+
+ // $(document).ready(function(){
+
+ //     $('a').on('mousedown', stopNavigate);
+
+ //     $('a').on('mouseleave', function () {
+ //            $(window).on('beforeunload', function(){
+ //       return 'Are you sure you want to leave?';
+ // });
+
+ // $(window).on('unload', function(){
+
+ //          logout();
+ // });
+ //     });
+
+
+
+ // });
+
+ // function stopNavigate(){    
+ //     $(window).off('beforeunload');
+ // }
+//////////////////////////////////////////////////////////////////
+//  window.onload = function() {
+    
+//              $.ajaxSetup({
+//                  headers: {
+//                      'X-XSRF-Token': $('meta[name="_token"]').attr('content')
+//                  }
+//              });
+//              alert('window closed');
+//              $.ajax({
+//           url: '/home/outFromSystem' ,
+//           type: 'POST',
+//           data: {  
+             
+//             },
+//          success: function(result) {
+//               //document.getElementById('login-table').innerHtml=result;
+//               var winH = $(window).height();
+//         var winW = $(window).width();
+// var blurDiv = document.createElement("div");
+// blurDiv.id = "blurDiv";
+// blurDiv.style.cssText = "position:absolute; top:0; z-index:1005; right:0; width:"+ winW +"; height:"+ winH +"; background-color: #000000; opacity:0.5; filter:alpha(opacity=50)";
+ 
+// document.getElementsByTagName("body")[0].appendChild(blurDiv);
+
+//               $( "#login-form" ).dialog()
+             
+
+
+
+//                       console.log(result);
+//                       alert(result);
+//                     },
+//           error: function(jqXHR, textStatus, errorThrown) {
+//                     console.log(errorThrown);
+//                     alert(errorThrown);
+
+//               }
+//     });
+
+//   };
+
+//////////////////////////////////////////////////////////////////////
 
 
 // setInterval(function(){ 
@@ -57,9 +168,9 @@ function stopNavigate(){
 // }, 50000);
 
     
-// window.onbeforeunload = function () {
+window.onbeforeunload = function () {
 
-//  alert('jj'); 
+//  //alert('jj'); 
 
 //   $.ajax({
 //         url: '/home/outFromSystem' ,
@@ -81,38 +192,74 @@ function stopNavigate(){
 //     });
         
    
-// }
+ }
+
+
 
 /////////////////////////////////////////////////////////////////
 
 
-$(document).ready(function(){
+// $(document).ready(function(){
 
-    $('a').on('mousedown', stopNavigate);
+//     $('a').on('mousedown', stopNavigate);
 
-    $('a').on('mouseleave', function () {
-           $(window).on('beforeunload', function(){
-                  return 'Are you sure you want to leave?';
-           });
-    });
-});
+//     $('a').on('mouseleave', function () {
+//            $(window).on('beforeunload', function(){
+//                   return 'Are you sure you want to leave?';
+//            });
+//     });
+// });
 
-function stopNavigate(){    
-    $(window).off('beforeunload');
-}
-And to get the Leave message alert will be,
+// function stopNavigate(){    
+//     $(window).off('beforeunload');
+// }
+// And to get the Leave message alert will be,
 
-$(window).on('beforeunload', function(){
-      return 'Are you sure you want to leave?';
-});
+// $(window).on('beforeunload', function(){
+//       return 'Are you sure you want to leave?';
+// });
 
-$(window).on('unload', function(){
+// $(window).on('unload', function(){
 
-         logout();
+//          logout();
 
-});
+// });
 
 </script>
+
+
+<div id="login-view"> </div>
+<div id="login-screen" hidden>
+
+
+<form id="login-form"class="form-horizontal" role="form" method="POST" action="/auth/login">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="E-mail" name="email" type="email" value="{{ old('email') }}" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                 <div>
+                     <label>
+                                    <a href="/password/email">Forgot Your Password?</a>
+                     </label>
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                                <h5>
+                                    Please Register From Here!
+                                    <a class=" btn btn-primary" href="/register">Register</a>
+                                </h5>
+
+                            </fieldset>
+                        </form>
+            </div>
 
 @extends('layouts.plane')
 
@@ -120,7 +267,16 @@ $(window).on('unload', function(){
 
 {{Session::put('timer', date("Y-m-d H:i:s"))}}
 {{ Session::put('sessiontimer', date("Y-m-d H:i:s"))}}
+
+ 
+<div onmousemove="test()" style="width:200px; height:200px; border:1px solid">
+
+
+
+</div>
 <div id="wrapper">
+
+
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -414,18 +570,7 @@ $(window).on('unload', function(){
 @endif
 
 @if(Auth::User()->type=='admin'||Auth::User()->type=='super admin')  
-                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>SECTIONs<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*sections') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/sections/') }}">List All Sections </a>
-                                </li>
-                                <li {{ (Request::is('*create') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/sections/create' ) }}">Add New Section</a>
-                                </li>                             
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                         
                         <li >
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> SPOTS<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -453,9 +598,6 @@ $(window).on('unload', function(){
                                 </li>
                                 <li {{ (Request::is('*admin') ? 'class="active"' : '') }}>
                                     <a href="{{ url ('/users/listadmin') }}">List All Admins</a>
-                                </li>
-                                <li {{ (Request::is('*super') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/users/listallsuperadmin') }}"> List All Super Admins </a>
                                 </li>
                                  <li >
                                     <a href="#"> ACTIVIES<span class="fa arrow"></span></a>
@@ -618,18 +760,7 @@ $(window).on('unload', function(){
                             <!-- /.nav-second-level -->
                         </li>
 
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Event Series<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*seriesevents') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/seriesevents/') }}">List All Event Series</a>
-                                </li>
-                                <li {{ (Request::is('*create') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/seriesevents/create' ) }}">Add New Event Series</a>
-                                </li>                             
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+            
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>EVENTs<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

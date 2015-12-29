@@ -9,6 +9,7 @@ use App\Company;
 use App\Exhibitor;
 use App\Booth;
 use Session;
+use Request;
 
 use Illuminate\Routing\Route;
 
@@ -174,7 +175,167 @@ protected $auth;
 		return view('home',compact('upcomingexhibitionevents','currentlyexhibitionevents','tracklogins','systemtracks','upcomingcompanyevents','currentlycompanyevents','finishedcompanyevents'));
 	}
 
+
+
+
+
+	public function sessionTime(){
+
+          $now = new DateTime(date("Y-m-d H:i:s"));
+
+          Session::put('clientTime', $now);
+
+
+          $time=Session::get('clientTime');
+
+
+
+			echo json_encode( $time);
+
+
+
+		}
+
 	public function outFromSystem(){
+      		  	$now = new DateTime(date("Y-m-d H:i:s"));
+
+		        $time=Session::get('clientTime');
+
+
+				$diff1 = $time->diff($now);
+				$test=$diff1->s;
+
+				//echo json_encode( $test);
+
+
+				  if($diff1->s > 2 ){
+
+
+					//Checking event_id key exist in session.
+					if (Session::has('event_id')) {
+
+					   $eventId=Session::get('event_id'); 
+					   $systemtrackId=Session::get('systemtrack_event_id');
+					   $systemtrack = Systemtrack::find($systemtrackId);
+					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+					   $systemtrack->save();
+					   Session::forget('event_id');
+					 //  Session::forget('systemtrack_id');
+
+					}
+
+					if (Session::has('booth_id')) {
+					  
+					   $boothId=Session::get('booth_id');
+					   $systemtrackId=Session::get('systemtrack_booth_id');
+
+					   $systemtrack = Systemtrack::find($systemtrackId);
+					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+					   $systemtrack->save();
+					   Session::forget('booth_id');
+					  // Session::forget('systemtrack_id');
+
+
+					}
+				$userId=Auth::user()->id;
+
+				$maxLogin=DB::table('tracklogins')
+		                        ->where('user_id', $userId)
+		          			    ->max('login_at');
+
+			    DB::table('tracklogins')
+			        ->where('user_id', $userId)
+			        ->where('login_at', $maxLogin) 
+			        ->update(['logout_at' => $now]);
+
+			 
+			   Auth::logout();
+
+
+
+
+
+
+
+
+
+
+
+				  }else{
+
+				  	$data="fail";
+
+ 	 			 echo json_encode( $data);
+				  }
+       			
+        				//$date =  $diff1->format('%h hours %i mintues %s secounds')
+ 	  //echo json_encode( $diff1);
+
+
+		 //$datetest= "01:00";
+		//  $datetest = date_create_from_format('H:i:s', '00:01:00');
+
+		// $standeredDate= date_format($datetest, 'i:s');
+
+		// $standeredTime = new DateTime(date("00:01:00"));
+
+		// $standeredTimeFormat->format("i:s");
+
+//           $now = new DateTime(date("Y-m-d H:i:s"));
+//            $javaDate =Request::get('currentDate');
+//            $test=strtotime($javaDate);
+//          $date1 =  date("Y-m-d H:i:s",$test);
+//          $finaldate= new DateTime($date1);
+// //
+//           // $date1 = new DateTime($now);
+// 			//$date2 = new DateTime($javaDate);
+// 			$interval = $now->diff($finaldate);
+// 			//date_timezone_set($interval, timezone_open('Pacific/Chatham'));
+
+// 			$datediff = $interval->format("%I:%S");
+
+//  // echo json_encode( $standeredTimeFormat);
+
+
+//  if($datediff > $standeredDate){
+			
+
+//  	//$data="logout";
+//   //echo json_encode( $data);
+//   return redirect('auth/login');
+
+
+//  }else{
+//  	$data="login";
+
+
+ // }
+
+//$nowdate=trim($now);
+         // return view('layouts.ajax',compact('jsDate'));
+	//$datetime1 = date_create($now);
+    //$datetime2 = date_create($javaDate);
+    
+   // $interval = date_diff($datetime1, $datetime2);
+    
+   //$date=  $interval->format('%h hours %i mintues %s secounds');
+
+        // echo json_encode( $now);
+
+  	//echo json_encode( $javaDate);
+
+       //  echo 'js date'.json_encode($jsDate);
+
+        // $diffTime= $nowdate->diff($jsDate);
+       //$date =  $diffTime->format('%h hours %i mintues %s secounds')
+  	//echo json_encode($datediff);
+
+         //echo 'date difference'.$diff
+
+         //if()
+
+
+		//	return redirect('auth/login');
 
 //ignore_user_abort(true);
 
@@ -234,117 +395,122 @@ protected $auth;
 
 
 // }   
+////////////////////////////////////////////////////////////////////////////////
+// 		   ignore_user_abort(true);
 
-		   ignore_user_abort(true);
 
+// 		        // inactive  
 
-		        // inactive  
+//     $date1 = new DateTime(Session::get('sessiontimer'));
+//     $date2 = new DateTime(date("Y-m-d H:i:s"));
 
-    $date1 = new DateTime(Session::get('sessiontimer'));
-    $date2 = new DateTime(date("Y-m-d H:i:s"));
+// 	$diff1 = $date2->diff($date1); //refresh
 
-	$diff1 = $date2->diff($date1); //refresh
+//     if ($diff1->i  > 10) {
 
-    if ($diff1->i  > 10) {
+//          // Checking event_id key exist in session.
+// 					if (Session::has('event_id')) {
 
-         // Checking event_id key exist in session.
-					if (Session::has('event_id')) {
+// 					   $eventId=Session::get('event_id'); 
+// 					   $systemtrackId=Session::get('systemtrack_event_id');
+// 					   $systemtrack = Systemtrack::find($systemtrackId);
+// 					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+// 					   $systemtrack->save();
+// 					   Session::forget('event_id');
+// 					   ///////////////////////////////////////////////////
+// 					 //  Session::forget('systemtrack_id');
 
-					   $eventId=Session::get('event_id'); 
-					   $systemtrackId=Session::get('systemtrack_event_id');
-					   $systemtrack = Systemtrack::find($systemtrackId);
-					   $systemtrack->leave_at=date("Y-m-d H:i:s");
-					   $systemtrack->save();
-					   Session::forget('event_id');
-					 //  Session::forget('systemtrack_id');
+// 					}
 
-					}
-
-					if (Session::has('booth_id')) {
+// 					if (Session::has('booth_id')) {
 					  
-					   $boothId=Session::get('booth_id');
-					   $systemtrackId=Session::get('systemtrack_booth_id');
+// 					   $boothId=Session::get('booth_id');
+// 					   $systemtrackId=Session::get('systemtrack_booth_id');
 
-					   $systemtrack = Systemtrack::find($systemtrackId);
-					   $systemtrack->leave_at=date("Y-m-d H:i:s");
-					   $systemtrack->save();
-					   Session::forget('booth_id');
-					  // Session::forget('systemtrack_id');
+// 					   $systemtrack = Systemtrack::find($systemtrackId);
+// 					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+// 					   $systemtrack->save();
+// 					   Session::forget('booth_id');
+// 					   //////////////////////////////////////////////////////////
+// 					  // Session::forget('systemtrack_id');
 
 
-					}
+// 					}
 							
-			   		$userId=Auth::user()->id;
+// 			   		$userId=Auth::user()->id;
 
-					$now = new DateTime();
+// 					$now = new DateTime();
 
-					$maxLogin=DB::table('tracklogins')
-			                        ->where('user_id', $userId)
-			          			    ->max('login_at');
+// 					$maxLogin=DB::table('tracklogins')
+// 			                        ->where('user_id', $userId)
+// 			          			    ->max('login_at');
 
-				    DB::table('tracklogins')
-				        ->where('user_id', $userId)
-				        ->where('login_at', $maxLogin) 
-				        ->update(['logout_at' => $now]);
+// 				    DB::table('tracklogins')
+// 				        ->where('user_id', $userId)
+// 				        ->where('login_at', $maxLogin) 
+// 				        ->update(['logout_at' => $now]);
 						 
-					Auth::logout();
+// 					Auth::logout();
 
-    }else{
+//     }else{
 
-    	 for ($i = 0; $i < 5; $i++) {
-		       flush();
-	           ob_flush();
-echo connection_status();
-			   if (connection_aborted()) {
+//     	 for ($i = 0; $i < 5; $i++) {
+// 		       flush();
+// 	           ob_flush();
+// echo connection_status();
+// 			   if (connection_aborted()) {
 
 
-				   	 // Checking event_id key exist in session.
-					if (Session::has('event_id')) {
+// 				   	 // Checking event_id key exist in session.
+// 					if (Session::has('event_id')) {
 
-					   $eventId=Session::get('event_id'); 
-					   $systemtrackId=Session::get('systemtrack_event_id');
-					   $systemtrack = Systemtrack::find($systemtrackId);
-					   $systemtrack->leave_at=date("Y-m-d H:i:s");
-					   $systemtrack->save();
-					   Session::forget('event_id');
-					 //  Session::forget('systemtrack_id');
+// 					   $eventId=Session::get('event_id'); 
+// 					   $systemtrackId=Session::get('systemtrack_event_id');
+// 					   $systemtrack = Systemtrack::find($systemtrackId);
+// 					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+// 					   $systemtrack->save();
+// 					   Session::forget('event_id');
+// 					   //////////////////////////////////////////////////////
+// 					 //  Session::forget('systemtrack_id');
 
-					}
+// 					}
 
-					if (Session::has('booth_id')) {
+// 					if (Session::has('booth_id')) {
 					  
-					   $boothId=Session::get('booth_id');
-					   $systemtrackId=Session::get('systemtrack_booth_id');
+// 					   $boothId=Session::get('booth_id');
+// 					   $systemtrackId=Session::get('systemtrack_booth_id');
 
-					   $systemtrack = Systemtrack::find($systemtrackId);
-					   $systemtrack->leave_at=date("Y-m-d H:i:s");
-					   $systemtrack->save();
-					   Session::forget('booth_id');
-					  // Session::forget('systemtrack_id');
+// 					   $systemtrack = Systemtrack::find($systemtrackId);
+// 					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+// 					   $systemtrack->save();
+// 					   Session::forget('booth_id');
+// 					   ///////////////////////////////////////////////////////////////////
+// 					  // Session::forget('systemtrack_id');
 
 
-					}
+// 					}
 							
-			   		$userId=Auth::user()->id;
+// 			   		$userId=Auth::user()->id;
 
-					$now = new DateTime();
+// 					$now = new DateTime();
 
-					$maxLogin=DB::table('tracklogins')
-			                        ->where('user_id', $userId)
-			          			    ->max('login_at');
+// 					$maxLogin=DB::table('tracklogins')
+// 			                        ->where('user_id', $userId)
+// 			          			    ->max('login_at');
 
-				    DB::table('tracklogins')
-				        ->where('user_id', $userId)
-				        ->where('login_at', $maxLogin) 
-				        ->update(['logout_at' => $now]);
+// 				    DB::table('tracklogins')
+// 				        ->where('user_id', $userId)
+// 				        ->where('login_at', $maxLogin) 
+// 				        ->update(['logout_at' => $now]);
 						 
-					Auth::logout();
-	                       //exit;
+// 					Auth::logout();
+// 					////////////////////////////////////////////////////////////
+// 	                       //exit;
 
-			  }
-			  sleep(1);
-         }
-    }      
+// 			  }
+// 			  sleep(1);
+//          }
+//     }      
 
 	}
 

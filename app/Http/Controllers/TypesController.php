@@ -80,8 +80,10 @@ class TypesController extends Controller {
 		//
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:halls',
-       // 'price'=>'required'
-      
+       	'desc'=>'required',
+        'price'=>'required',
+       	'size'=>'required'
+
        
         ]);
        

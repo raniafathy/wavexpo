@@ -239,6 +239,44 @@ class GeneralinfosController extends Controller {
 	public function update($id)
 	{
 		//
+
+		if (Request::hasFile('image')) { 
+			$v = Validator::make(Request::all(), [
+        'image' => 'mimes:jpeg,jpg,png',
+        ]);
+       
+	    if ($v->fails())
+	    {
+	        return redirect()->back()->withErrors($v->errors())
+	        						 ->withInput();
+	    }else{
+			$userId=Request::get('id');
+	    	//Request::get('id')=$id;
+           // $userId=Request::get('id');
+            //echo $userId;
+	    	$gInfo=Generalinfo::where('user_id',$userId)->get();
+	    	$gInfoId=$gInfo[0]->id;
+		//echo $gInfoId;
+		$gInfo=Generalinfo::find($gInfoId);
+				$destination= 'uploads/';
+				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+				Request::file('image')->move($destination,$imagename);
+				// $path = Request::file('image')->getRealPath();
+				// echo $path;
+				 //$path = public_path('upload/' . $imagename);
+ 		  		//Image::make(Request::file('image')->getRealPath())->resize(200, 200)->save($path);
+				$gInfo->image=$imagename;
+
+				$gInfo->save();
+
+		  	return redirect('generalinfos/'.$userId);
+
+
+			}
+
+		}
+
+			//////////////update rest of data/////////////////////////
 		$v = Validator::make(Request::all(), [
         'city' => 'required|max:30',
         'dob' => 'required',
@@ -267,25 +305,11 @@ class GeneralinfosController extends Controller {
 
 		    $gInfo->city = Request::get('city');
 		    $gInfo->dob = Request::get('dob');
-		    $gInfo->image = Request::get('image');
 		    $gInfo->address = Request::get('address');
 		    $gInfo->phone = Request::get('phone');
 		    $gInfo->anotherphone = Request::get('anotherphone');
 		    $gInfo->skypename = Request::get('skypename');
 		    $gInfo->howhearaboutus = Request::get('howhearaboutus');
-		    if (Request::hasFile('image')) { 
-				$destination= 'uploads/';
-				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
-				Request::file('image')->move($destination,$imagename);
-				// $path = Request::file('image')->getRealPath();
-				// echo $path;
-				 //$path = public_path('upload/' . $imagename);
- 		  		//Image::make(Request::file('image')->getRealPath())->resize(200, 200)->save($path);
-				$gInfo->image=$imagename;
-			}
-			// else{
-			// 	$gInfo->image=Request::get('image');
-			// }
 
 		    $gInfo->save();
             
@@ -308,46 +332,29 @@ class GeneralinfosController extends Controller {
 	}
 }	
 
+	public function editImage($id){
+
+//authorization
+		if (!$this->adminAuth() && !$this->userAuth(Auth::User()->id)){
+			return view('errors.404');
+		}
+		
+		$user=Generalinfo::where('user_id',$id)->get();		
+		return view('generalinfos.editimage',compact('user'));
+
+
+
+
+	}
+
+
 	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function editProfileImage($id)
-	{
-		$v = Validator::make(Request::all(), [
-        'image' => 'required|max:30',
-        ]);
-       
-	    if ($v->fails())
-	    {
-	        return redirect()->back()->withErrors($v->errors())
-	        						 ->withInput();
-	    }else{
-	    	Auth::User()->id=$id;
-           // $userId=Request::get('id');
-            //echo $userId;
-	    	$gInfo=Generalinfo::where('user_id',$id)->get();
-	    	$gInfoId=$gInfo[0]->id;
-		echo $gInfoId;
-		$gInfo=Generalinfo::find($gInfoId);
-		
-
-		if (Request::hasFile('image')) { 
-				$destination= 'uploads/';
-				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
-				Request::file('image')->move($destination,$imagename);
-				$gInfo->image=$imagename;
-			}
-
-		    $gInfo->save();
-		  	return redirect('generalinfos/'.$id);
-
-
-	}
-}
-
+	
 	public function destroy($id)
 		{
 			//

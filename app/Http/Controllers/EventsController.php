@@ -69,8 +69,8 @@ class EventsController extends Controller {
 	public function create()
 	{
 		//
-		$seriesevents = SeriesEvent::all();
-		return view('events.create',compact('seriesevents'));
+		//$seriesevents = SeriesEvent::all();
+		return view('events.create');
 	}
 
 	/**
@@ -83,8 +83,9 @@ class EventsController extends Controller {
 		//
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:events',
+        'desc' => 'required',
+
         'type' => 'required',
-        'seriesevent_id' => 'required',
         ]);
        
 	    if ($v->fails())
@@ -97,7 +98,6 @@ class EventsController extends Controller {
 		    $event->desc = Request::get('desc');
 		    $event->type = Request::get('type');
 		    $event->privacy = Request::get('privacy');
-		    $event->series_event_id = Request::get('seriesevent_id');
 			$event->save();
 			return redirect('events');
 	    }

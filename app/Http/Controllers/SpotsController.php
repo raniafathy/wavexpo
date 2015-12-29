@@ -83,6 +83,7 @@ class SpotsController extends Controller {
 			//
 		$v = Validator::make(Request::all(), [
         'location' => 'required|max:50|unique:spots',
+        'desc' => 'required',
            
         ]);
        

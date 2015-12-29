@@ -58,23 +58,7 @@
                
                 </div>
             
-   
-
-
-             <div class="form-group has-success">
-               <label> Series Exhibition </label>
-              <select class="form-control col-md-6" name="seriesevent_id">
-              @foreach ($seriesevents as $seriesevent)
-                          @if(old('seriesevent_id') === $seriesevent->id)
-                            <option value="{{ $seriesevent->id }}" selected="true"> {{ $seriesevent->name }}</option>
-                          @else
-                            <option value="{{ $seriesevent->id }}"> {{ $seriesevent->name }}</option>   
-                          @endif 
-                  
-              @endforeach
-            
-            </select>
-           </div>
+  
             
             <button> Add </button>
         </form>

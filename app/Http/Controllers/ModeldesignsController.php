@@ -83,6 +83,7 @@ class ModeldesignsController extends Controller {
 
 		$v = Validator::make(Request::all(), [
         'name' => 'required|max:50|unique:modeldesigns',
+        'desc' => 'required',
       
        
         ]);

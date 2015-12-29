@@ -6,7 +6,10 @@
 @section('section')
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>  
+<meta name="_token" content="{{ app('Illuminate\Encryption\Encrypter')->encrypt(csrf_token()) }}" />
 
+<?php $booths; ?>
+<?php $systemtrack_users ;?>
 
 <div class="col-sm-12">
 <div class="row">
@@ -41,18 +44,14 @@
 <div id="booth" class="form-group has-success">
 	
 
-</div id="container">
+</div>
 
-
+<div id="can">
 
 
 	</div>
 </div>
 </div>
-
-<?php $booths; ?>
-<?php $systemtrack_users ;?>
-
 
 <script type="text/javascript">
 
@@ -120,10 +119,13 @@ $(document).ready(function(){
 
 				   	    },
 			    success: function(result) {
+			    	 document.getElementById('can').innerHTML=result;
+    			
 
-			    $("#container").append(result);
+			   // $(".container").html(result);
+			                console.log(result);
 
-			    			 alert(result);
+			    			// alert(result);
 			                //convert refreshing pagination to ajax
 			               // paginateWithAjax();
 
@@ -131,7 +133,7 @@ $(document).ready(function(){
 						  },
 				error: function(jqXHR, textStatus, errorThrown) {
 			                console.log(errorThrown);
-			                alert(errorThrown);
+			                //alert(errorThrown);
 			           }
 
 				});
