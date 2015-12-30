@@ -13,6 +13,9 @@
 <div class="row">
 	
 </div>
+<a class="btn btn-primary" href="{{ url ('/events/create' ) }}">Add New Event</a>
+</br>
+</br
 <div class="row">
 	<div class="col-sm-12">
 		@section ('cotable_panel_title','List all events ')

@@ -95,15 +95,45 @@ protected $auth;
 
 
 		 //  }
-		   
+
+
+
+
 
 		}
 
 
+		$sessionId=Session::getId();
+
+		$request = "/process";
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $request);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+		curl_exec($ch);
+		//echo $now;
+		curl_close($ch);
+		//echo $sessionId;
 
 
-		
-	}
+			//ignore_user_abort(true);
+
+			//echo "Testing connection handling";
+
+			 //    while (1) {
+			 //            if (connection_status() != CONNECTION_NORMAL)
+			 //                    break;
+			 //          //  sleep(1);
+			 //         //   echo "test";
+			 //            flush();
+			 //    }
+				// flush();
+	   //         ob_flush();
+				//echo connection_status();
+			  //  if (connection_aborted()) {
+				
+}
+	
 
 	/**
 	 * Show the application dashboard to the user.
@@ -117,6 +147,9 @@ protected $auth;
 
 
 	//	 exit();
+
+
+
 		$upcomingexhibitionevents=ExhibitionEvent::where('start_time','>',date("Y-m-d H:i:s"))->take(4)->get();
 		$currentlyexhibitionevents=ExhibitionEvent::where('start_time','<',date("Y-m-d H:i:s"))->where('end_time','>',date("Y-m-d H:i:s"))->take(4)->get();
 		$tracklogins=Tracklogin::where('user_id','=',Auth::User()->id)->orderBy('created_at','desc')->take(2)->get();
@@ -171,6 +204,67 @@ protected $auth;
             }
 
 	    }
+
+	    ///////////////////////////////////////////////////////////////////////////
+	    	    echo "hi";
+			$now = new DateTime(date("Y-m-d H:i:s"));
+
+		        $time=Session::get('clientTime');
+
+
+				$diff1 = $time->diff($now);
+				$test=$diff1->s;
+
+				//echo json_encode( $test);
+
+
+				  if($diff1->s > 2 ){
+
+
+					//Checking event_id key exist in session.
+					if (Session::has('event_id')) {
+
+					   $eventId=Session::get('event_id'); 
+					   $systemtrackId=Session::get('systemtrack_event_id');
+					   $systemtrack = Systemtrack::find($systemtrackId);
+					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+					   $systemtrack->save();
+					   Session::forget('event_id');
+					 //  Session::forget('systemtrack_id');
+
+					}
+
+					if (Session::has('booth_id')) {
+					  
+					   $boothId=Session::get('booth_id');
+					   $systemtrackId=Session::get('systemtrack_booth_id');
+
+					   $systemtrack = Systemtrack::find($systemtrackId);
+					   $systemtrack->leave_at=date("Y-m-d H:i:s");
+					   $systemtrack->save();
+					   Session::forget('booth_id');
+					  // Session::forget('systemtrack_id');
+
+
+					}
+				$userId=Auth::user()->id;
+
+				$maxLogin=DB::table('tracklogins')
+		                        ->where('user_id', $userId)
+		          			    ->max('login_at');
+
+			    DB::table('tracklogins')
+			        ->where('user_id', $userId)
+			        ->where('login_at', $maxLogin) 
+			        ->update(['logout_at' => $now]);
+
+			 
+			   Auth::logout();
+			  //  outFromSystem();
+
+		sleep(6);
+	 }
+		 
 
 		return view('home',compact('upcomingexhibitionevents','currentlyexhibitionevents','tracklogins','systemtracks','upcomingcompanyevents','currentlycompanyevents','finishedcompanyevents'));
 	}

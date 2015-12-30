@@ -17,7 +17,8 @@
 
 
 </head>
-<body onmousemove="logTest()">
+<body onmousemove="logTest()"  onbeforeunload=" close()">
+
 
 
 	@yield('body')
@@ -57,6 +58,12 @@ function logTest(){
 
                               }
                     });
+
+}
+
+function close(){
+
+return 'Dialog text here.';
 
 }
 </script>

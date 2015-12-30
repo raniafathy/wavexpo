@@ -19,6 +19,7 @@ use App\Country;
 use Session;
 use App\Systemtrack;
 use DB;
+use DateTime;
 
 class AuthController extends Controller {
 
@@ -49,9 +50,13 @@ class AuthController extends Controller {
 		$this->auth = $auth;
 		$this->registrar = $registrar;
 
-		$this->middleware('guest', ['except' => ['getLogout','createuser','createRegister','confirm']]);
-	}
+	
 		
+	$this->middleware('guest', ['except' => ['getLogout','createuser','createRegister','confirm']]);
+	
+
+
+}		
 	
 	public function createRegister(){
 

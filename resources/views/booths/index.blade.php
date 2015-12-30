@@ -13,6 +13,11 @@
 <div class="row">
 	
 </div>
+ <a class="btn btn-primary" href="{{ url ('/booths/create' ) }}">Add New Booth</a>
+</br>
+</br>
+
+
 <div class="row">
 	<div class="col-sm-12">
 		@section ('cotable_panel_title','List all Booths ')

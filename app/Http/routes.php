@@ -87,6 +87,9 @@ Route::get('/blank', function()
 });
 Route::get('/dashboard', 'HomeController@index');
 
+Route::post('/process', 'ProcessController@startprocess');
+
+
 Route::get('/company', function()
 {
 	return View::make('company');

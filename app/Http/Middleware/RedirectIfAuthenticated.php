@@ -4,7 +4,10 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use User;
-
+use DateTime;
+use Session;
+use Auth;
+use DB;
 class RedirectIfAuthenticated {
 
 	/**
@@ -23,8 +26,10 @@ class RedirectIfAuthenticated {
 	public function __construct(Guard $auth)
 	{
 		$this->auth = $auth;
-	}
 
+		
+		 
+}
 	/**
 	 * Handle an incoming request.
 	 *

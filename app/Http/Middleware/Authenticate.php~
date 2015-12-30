@@ -2,10 +2,6 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use DateTime;
-use Session;
-use Auth;
-use DB;
 
 class Authenticate {
 
@@ -26,10 +22,11 @@ class Authenticate {
 	{
 		$this->auth = $auth;
 
- 
+		echo "hi";
+
+		sleep(6);
 
 	}
-
 
 	/**
 	 * Handle an incoming request.
