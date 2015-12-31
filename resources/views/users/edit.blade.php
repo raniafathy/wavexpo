@@ -28,7 +28,11 @@
              <label> Type </label>
 
                     <select   name="type" class="form-control" id="inputSuccess">
+                                @if($user->type=='regular')
+
                       <option value="admin" class="form-control" id="inputSuccess" >Admin</option>
+                                 @endif
+
                       <option value="regular" class="form-control" id="inputSuccess" >Regular</option>
                       <option value="company" class="form-control" id="inputSuccess" >Company</option>
                     </select>

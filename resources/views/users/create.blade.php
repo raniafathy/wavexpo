@@ -62,6 +62,9 @@
                         <input type="radio" name="type" id="optionsRadiosInline1" value="regular" checked> Visitor
                     </label>
                     <label class="radio-inline">
+                        <input type="radio" name="type" id="optionsRadiosInline2" value="company" >Exhibitor
+                    </label>
+                    <label class="radio-inline">
                         <input type="radio" name="type" id="optionsRadiosInline2" value="admin" >Admin
                     </label>
                     @else
@@ -69,7 +72,10 @@
                         <input type="radio" name="type" id="optionsRadiosInline1" value="regular" > Visitor
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="type" id="optionsRadiosInline2" value="admin" checked>Admin
+                        <input type="radio" name="type" id="optionsRadiosInline2" value="company" checked>Exhibitor
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="type" id="optionsRadiosInline2" value="admin" >Admin
                     </label>
                     @endif
                    
@@ -81,21 +87,21 @@
 
             <!-- File Upload -->
 
-<h1>File Upload</h1>
+<!-- <h1>File Upload</h1>
 
             <div class="form-group">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label class="col-md-4 control-label"> File Name</label>
+               <!-- <label class="col-md-4 control-label"> File Name</label>
                <div class="col-md-6">
                 <input type="text" name="filename" class="form-control" id="inputSuccess">
             </div>
             </div>
             <br/>
-            <br/>
+            <br/> -->
 
-            <div class="form-group">
+            <!-- <!-- <div class="form-group">
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label class="col-md-4 control-label"> Description</label>
+               <!-- <label class="col-md-4 control-label"> Description</label>
                 <div class="col-md-6">
 
                 <textarea name="desc" class="form-control" id="inputSuccess"></textarea>
@@ -104,9 +110,9 @@
             <br/>
             <br/>
 
-            <div class="form-group">
+            <div class="form-group"> -->
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label class="col-md-4 control-label"> Type </label>
+               <!-- label class="col-md-4 control-label"> Type </label>
                 <div class="col-md-6">
                 <input type="text" name="filetype" class="form-control" id="inputSuccess">
             </div>
@@ -121,8 +127,8 @@
               </div>
             </div>
             <br/>
-            <br/>
-      
+            <br/> --> 
+       
             
             
 <button type="submit" class="btn btn-primary btn-block">Add</button>

@@ -32,6 +32,7 @@ return array(
     'CreateHallsTable' => $baseDir . '/database/migrations/2015_09_03_135631_create_halls_table.php',
     'CreateIndustriesTable' => $baseDir . '/database/migrations/2015_08_31_131055_create_industries_table.php',
     'CreateInterestsTable' => $baseDir . '/database/migrations/2015_08_31_105920_create_interests_table.php',
+    'CreateJobsTable' => $baseDir . '/database/migrations/2015_12_31_150346_create_jobs_table.php',
     'CreateModeldesignsTable' => $baseDir . '/database/migrations/2015_09_06_141847_create_modeldesigns_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateProfessionalinfosTable' => $baseDir . '/database/migrations/2015_08_31_134036_create_professionalinfos_table.php',

@@ -518,7 +518,7 @@ count= count+1;
                             <!-- /input-group -->
                          
                         </li>
-@if(Auth::User()->type=='admin'||Auth::User()->type=='regular')
+@if(Auth::User()->type=='admin'||Auth::User()->type=='regular'||Auth::User()->type=='company')
                        
                         <li>
                             <a href="#"><i class="fa fa-edit fa-fw"></i>UserProfileInfo<span class="fa arrow"></span></a>

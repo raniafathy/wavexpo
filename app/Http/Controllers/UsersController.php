@@ -168,24 +168,24 @@ class UsersController extends Controller {
 
 	        // File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('desc');
-		    $file->type=Request::get('filetype');
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
-            $file->save();
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('desc');
+		 //    $file->type=Request::get('filetype');
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
+   //          $file->save();
 
-            $userfile= new UserFile;
-            $userfile->user_id=$user->id;
-            $userfile->file_id=$file->id;
-            $userfile->save();
+            // $userfile= new UserFile;
+            // $userfile->user_id=$user->id;
+            // $userfile->file_id=$file->id;
+            // $userfile->save();
 
 				if($user->type == "company"){
 

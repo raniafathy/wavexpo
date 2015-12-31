@@ -318,7 +318,7 @@ class CompaniesController extends Controller {
             $userfile->save();
 
 
-			return redirect('users');
+			//return redirect('users');
 		   
 
 
