@@ -87,12 +87,19 @@ Route::get('/blank', function()
 });
 Route::get('/dashboard', 'HomeController@index');
 
-Route::post('/process', 'ProcessController@startprocess');
-
-
 Route::get('/company', function()
 {
 	return View::make('company');
+});
+
+Route::get('/company/user', function()
+{
+	return View::make('exhibitor');
+});
+
+Route::get('/show/exhibitorpage', function()
+{
+	return View::make('showexhibitorpage');
 });
 
 Route::get('/register', array('as' => 'user.createRegister', 'uses' => 'Auth\AuthController@createRegister'));

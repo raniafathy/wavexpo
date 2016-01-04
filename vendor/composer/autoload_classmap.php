@@ -27,6 +27,7 @@ return array(
     'CreateExhibitorsTable' => $baseDir . '/database/migrations/2015_09_02_133007_create_exhibitors_table.php',
     'CreateExibitionIndustry' => $baseDir . '/database/migrations/2015_12_15_120211_create_Exibition_industry.php',
     'CreateExibitorUsers' => $baseDir . '/database/migrations/2015_12_15_115327_create_Exibitor_users.php',
+    'CreateFailedJobsTable' => $baseDir . '/database/migrations/2016_01_04_123904_create_failed_jobs_table.php',
     'CreateFilesTable' => $baseDir . '/database/migrations/2015_09_10_115659_create_files_table.php',
     'CreateGeneralinfosTable' => $baseDir . '/database/migrations/2015_08_31_133957_create_generalinfos_table.php',
     'CreateHallsTable' => $baseDir . '/database/migrations/2015_09_03_135631_create_halls_table.php',

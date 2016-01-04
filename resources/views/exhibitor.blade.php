@@ -517,37 +517,13 @@ count= count+1;
                             </div>
                             <!-- /input-group -->
                          
-                        </li>
-
-
-@if(Auth::User()->type=='admin'||Auth::User()->type=='regular'||Auth::User()->type=='company')
+                        </li>  
+                        <?php $flag=1;?>                    
                        
-                        <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i>UserProfileInfo<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                    <li {{ (Request::is('*users') ? 'class="active"' : '') }}>
-                                        <a href="/users/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> Basic Info</a>
-                                    </li>
-
-                                    <li {{ (Request::is('*generalinfos') ? 'class="active"' : '') }}>
-                                        <a href="/generalinfos/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> General Info</a>
-                                    </li>
-
-                                     <li {{ (Request::is('*professionalinfos') ? 'class="active"' : '') }}>
-                                        <a href="/professionalinfos/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> Professional Info</a>
-                                    </li>                          
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                       
-@endif
-
-
-
- <!-- @if(Auth::User()->type=='company')
+@if(Auth::User()->type=='company' && $flag==1)
 
                         <li {{ (Request::is('*showprofile') ? 'class="active"' : '') }}>
-                            <a href="/companies/showprofile/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> Company Profile Info</a>
+                            <a href="/companies/showprofile/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> CompanyProfileInfo</a>
                         </li>
 
                          <li {{ (Request::is('*showprofile') ? 'class="active"' : '') }}>
@@ -558,170 +534,7 @@ count= count+1;
                             <a href="{{ url ('/exhibitors/createexhibitorbyadmin' ) }}"><i class="fa fa-edit fa-fw"> </i> Add New Exhibitor</a>
                         </li>
 
-
-@endif  -->
-
-@if(Auth::User()->type=='admin')  
-
-
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>General Settings<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                     <li {{ (Request::is('*spots') ? 'class="active"' : '') }}>
-                                        <a href="{{ url ('/spots/') }}">Spots</a>
-                                    </li>
-
-                                    <li>
-                                    <a href="#">    COMPONENTS <span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                         <li>
-                                            <a href="{{ url ('/halls/') }}">HALLs  </a>
-                                            
-                                          <li>
-                                          <li>
-                                            <a href="{{ url ('/modeldesigns/') }}">MODEL DESIGNs  </a>
-                                                
-                                          <li>
-                                          <li>
-                                            <a href="{{ url ('/types/') }}">MATERIALS </a>
-                                            
-                                          <li>
-                                                
-                                        </ul>    
-                                    <!-- /.nav-third-level -->
-                                </li>
-
-                                     <li>
-                                    <a href="{{ url ('/industries/') }}">INDUSTRY </a>
-                                    
-                                    <!-- /.nav-third-level -->
-                                </li>                         
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>                         
-                    
-                       
-                        <li >
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> User Settings<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*users') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/users/') }}">List All Users</a>
-                                </li>
-                            
-                                <li {{ (Request::is('*regular') ? 'class="active"' : '') }}>
-                                    <a href="{{ url('/users/listregular') }}">List All Visitors</a>
-                                </li>
-                                <li {{ (Request::is('*admin') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/users/listadmin') }}">List All Admins</a>
-                                </li>
-                                 <li >
-                                    <a href="{{ url ('/activities/') }}"> ACTIVIES</a>
-                                    
-                            <!-- /.nav-second-level -->
-                                 </li>
-                                 <li >
-                                    <a href="{{ url ('/interests/') }}"> INTERESTS</a>
-                            
-                            <!-- /.nav-second-level -->
-                                 </li>
-                               
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-
-                           <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Exhibition Settings <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*exhibitions') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/exhibitions/') }}"> Exhibitions </a>
-                                </li>
-                                
-                        
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Exhibitor Settings <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*companies') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/companies/') }}">COMPANIES </a>
-                                </li>
-                                   
-                                <li {{ (Request::is('*exhibitors') ? 'class="active"' : '') }}>
-                                            <a href="{{ url ('/exhibitors/') }}">EXHIBITORS</a>
-                                </li>
-                                    
-                            <!-- /.nav-second-level -->
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-
-                        <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i>Exhibition Events Settings <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                                <li >
-                                    <a href="{{ url ('/exhibitionevents/') }}">EXHIBITION EVENTS </a>
-                                    
-                                </li>
-
-                                <li>
-                                    <a href="{{ url ('/booths/') }}">BOOTH</a>
-                            
-                                    <!-- /.nav-second-level -->
-                                </li>
-                        </ul>
-                        </li>
-            
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>EVENT Settings<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*events') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/events/') }}">List All Event </a>
-                                </li>
-                                                          
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Facilities Settings<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*rooms') ? 'class="active"' : '') }}>
-                                    <a href="{{ url ('/rooms/') }}">ROOMs</a>
-                                </li>                            
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li {{ (Request::is('*loginhistoryforall') ? 'class="active"' : '') }}>
-                                    <a href="/users/loginhistoryforall">Login Track Report</a>
-                                </li>
-                                <li {{ (Request::is('*alluserhistory') ? 'class="active"' : '') }}>
-                                    <a href="/systemtracks/alluserhistory">Users Track Report</a>
-                                </li>
-                                 <li {{ (Request::is('*event') ? 'class="active"' : '') }}>
-                                    <a href="/systemtracks/exhibitionevent">Events Track Report</a>
-                                </li>
-                                 <li {{ (Request::is('*booth') ? 'class="active"' : '') }}>
-                                    <a href="/systemtracks/booth">Booths Track Report</a>
-                                </li>
-                                <li {{ (Request::is('*eventsreport') ? 'class="active"' : '') }}>
-                                    <a href="/exhibitionevents/eventsreport">Exhibition Events Report</a>
-                                </li>
-                                <li {{ (Request::is('*boothsreport') ? 'class="active"' : '') }}>
-                                    <a href="/booths/boothsreport">Booth Report</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                       <!--  <li {{ (Request::is('*documentation') ? 'class="active"' : '') }}>
-                            <a href="{{ url ('documentation') }}"><i class="fa fa-file-word-o fa-fw"></i> Documentation</a>
-                        </li> -->
-@endif                        
+@endif
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

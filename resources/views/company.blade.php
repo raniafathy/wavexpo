@@ -6,6 +6,6 @@
 
 <p class = "tpbutton btn-toolbar" style="text-align:center">
      <a class = "btn navbar-btn btn-primary" href = "/dashboard" >Visitor</a>
-     <a class = "btn navbar-btn btn-success" href = "#" >Exibitor</a>
+     <a class = "btn navbar-btn btn-success" href = "/dashboard" >Exibitor</a>
 </p>
 @stop
