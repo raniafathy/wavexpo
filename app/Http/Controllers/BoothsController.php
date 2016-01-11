@@ -48,7 +48,11 @@ class BoothsController extends Controller {
 		return true;
 	}
 
-
+	/**
+	 * Authorize user as company
+	 * @param  integer $user_id
+	 * @return Response
+	 */
 
 	private function checkCompanyType()
 	{		
@@ -136,24 +140,24 @@ class BoothsController extends Controller {
 
 			// File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('filedesc');
-		    $file->type=Request::get('filetype');
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
-            $file->save();
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('filedesc');
+		 //    $file->type=Request::get('filetype');
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
+   //          $file->save();
 
-            $boothfile= new BoothFile;
-            $boothfile->booth_id=$booth->id;
-            $boothfile->file_id=$file->id;
-            $boothfile->save();
+   //          $boothfile= new BoothFile;
+   //          $boothfile->booth_id=$booth->id;
+   //          $boothfile->file_id=$file->id;
+   //          $boothfile->save();
 
 
 			return redirect('booths');
@@ -168,7 +172,7 @@ class BoothsController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+				//check on booth_id is exsist
 		if (Session::has('systemtrack_booth_id'))
 		{
 			$systemtrack_booth_id_value = Session::get('systemtrack_booth_id');
@@ -182,6 +186,24 @@ class BoothsController extends Controller {
 						//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
 			      }
 		}
+
+		//check on event_id is exsist
+
+    	if (Session::has('systemtrack_event_id'))
+		{
+
+		$systemtrack_event_id_value = Session::get('systemtrack_event_id');
+		$systemtrack_event=Systemtrack::find($systemtrack_event_id_value);
+		if($systemtrack_event->leave_at==null){
+
+			DB::table('systemtracks')
+            ->where('id', $systemtrack_event_id_value)
+            ->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+					//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+		      }
+
+		  }
 
 		$booth=Booth::find($id);
 
@@ -197,7 +219,9 @@ class BoothsController extends Controller {
 
         Session::put('booth_id', $id);
         Session::put('systemtrack_booth_id',$systemtrack->id);
-
+ 		DB::table('systemtracks')
+            ->where('id', $systemtrack->id)
+            ->update(['boothid' => $id,'systemboothid'=>$systemtrack->id]);
 		return view('booths.show',compact('booth'));
 	}
 
@@ -294,7 +318,11 @@ class BoothsController extends Controller {
 	    return redirect("booths");
 	}
 
-
+	/**
+	 * function to book certain booth
+	 * @param  integer $user_id
+	 * @return Response
+	 */
 	public function bookBooth($id){
 
 		if(!$this->adminAuth()&&!$this->checkCompanyType()){
@@ -316,6 +344,12 @@ class BoothsController extends Controller {
 
 	}
 
+	/**
+	 * function to show booth report
+	 * @param  integer $user_id
+	 * @return Response
+	 */
+
 	public function boothsreport(){
 
 		$exhibitionevents=ExhibitionEvent::all();
@@ -334,6 +368,12 @@ class BoothsController extends Controller {
 
 
 	}
+
+	/**
+	 * function ajax for showing booths
+	 * @param  integer $user_id
+	 * @return Response
+	 */
 
 
 	public function showboothAjax(){
@@ -354,6 +394,24 @@ class BoothsController extends Controller {
 
 		}
 
+		//check on event_id is exsist
+		//log out from last booth
+    	if (Session::has('systemtrack_event_id'))
+		{
+
+		$systemtrack_event_id_value = Session::get('systemtrack_event_id');
+		$systemtrack_event=Systemtrack::find($systemtrack_event_id_value);
+		if($systemtrack_event->leave_at==null){
+
+			DB::table('systemtracks')
+            ->where('id', $systemtrack_event_id_value)
+            ->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+					//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+		      }
+
+		  }
+
 		$boothId = Request::get('boothId');
 
 		$booth=Booth::find($boothId);
@@ -369,7 +427,9 @@ class BoothsController extends Controller {
 
         Session::put('booth_id', $boothId);
         Session::put('systemtrack_booth_id',$systemtrack->id);
-
+		DB::table('systemtracks')
+            ->where('id', $systemtrack->id)
+            ->update(['boothid' => $id,'systemboothid'=>$systemtrack->id]);
         // echo json_encode($booth);
 
          //echo "yarab far7a";

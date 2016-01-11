@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.exhibitor')
 @section('page_heading','Tables')
 
 @section('section')
@@ -30,11 +30,11 @@
 
 					@foreach ($exhibitors as $exhibitor)
 				        <tr  class="success" id="{{ $exhibitor->id }}">
-				            <td class="text-center"><a title="Show exhibitor Info" href="/exhibitors/{{$exhibitor->id}}" class="do">{{ $exhibitor->name}}</a></td>
+				            <td class="text-center"><a title="Show exhibitor Info" href="/companies/showprofile/{{ Auth::User()->id }}" class="do">{{ $exhibitor->name}}</a></td>
 				            <td class="text-center">{{ $exhibitor->desc }}</td>
 				            <td class="text-center">
-				            	<a title="Edit exhibitor Info" href="/exhibitors/{{$exhibitor->id}}/edit" class="do"><img src="/images/edit.png" width="30px" height="30px">	</a>
-	{{ Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('exhibitors.destroy'))) }}
+				            	<a title="Edit exhibitor Info" href="/exhibitors/editcompanyexhibitor/{{$exhibitor->id}}" class="do"><img src="/images/edit.png" width="30px" height="30px">	</a>
+	{{ Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'url' => "/exhibitors/deletecompanyexhibitor/$exhibitor->id")) }}
 						            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	         						<input type="hidden" name="id" value="{{ $exhibitor->id }}">
 						          	<button type="submit" title="Delete exhibitor"  ><img src="/images/delete.png" width="30px" height="30px"></button>

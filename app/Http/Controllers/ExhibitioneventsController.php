@@ -92,24 +92,24 @@ class ExhibitioneventsController extends Controller {
 
 			// File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('filedesc');
-		    $file->type=Request::get('filetype');
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
-            $file->save();
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('filedesc');
+		 //    $file->type=Request::get('filetype');
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
+   //          $file->save();
 
-            $exhibitioneventfile= new ExhibitionEventFile;
-            $exhibitioneventfile->exhibition_event_id=$exhibitionevent->id;
-            $exhibitioneventfile->file_id=$file->id;
-            $exhibitioneventfile->save();
+   //          $exhibitioneventfile= new ExhibitionEventFile;
+   //          $exhibitioneventfile->exhibition_event_id=$exhibitionevent->id;
+   //          $exhibitioneventfile->file_id=$file->id;
+   //          $exhibitioneventfile->save();
 
 
 			return redirect('exhibitionevents');
@@ -124,22 +124,58 @@ class ExhibitioneventsController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		//check on event_id is exsist
+	if (Session::has('systemtrack_event_id'))
+		{
+			$systemtrackid =Systemtrack::all() ->last()-> pluck('id');
+		$systemtrack_event_id_value = Session::get('systemtrack_event_id');
+		$systemtrack_event=Systemtrack::find($systemtrack_event_id_value);
+		if($systemtrack_event->leave_at==null){
+
+			DB::table('systemtracks')
+            ->where('id', $systemtrack_event_id_value)
+            ->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+					//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+		      }
+		    
+		  }
+		  //check on booth_id is exsist
+		if (Session::has('systemtrack_booth_id'))
+		{
+			$systemtrackid =Systemtrack::all() ->last()-> pluck('id');
+			$systemtrack_booth_id_value = Session::get('systemtrack_booth_id');
+			$systemtrack_booth=Systemtrack::find($systemtrack_booth_id_value);
+			if($systemtrack_booth->leave_at==null){
+
+				DB::table('systemtracks')
+            	->where('id', $systemtrack_booth_id_value)
+            	->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+					//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+		      }
+		    
+		  }
+
+		//Session::forget('systemtrack_event_id');
 
 		$exhibitionevent=ExhibitionEvent::find($id);
 
-		// $systemtrack=new Systemtrack;
-  //       $systemtrack->user_id=Auth::User()->id;
-  //     //  $systemtrack->spot_id=$booth->spot_id;
-  //       $systemtrack->do=Auth::User()->name.' '.'visit'.' '.$exhibitionevent->name.' Event '.'at'.' '.date("Y-m-d H:i:s");
-  //       $systemtrack->comein_at=date("Y-m-d H:i:s");
+		$systemtrack=new Systemtrack;
+        $systemtrack->user_id=Auth::User()->id;
+      //  $systemtrack->spot_id=$booth->spot_id;
+        $systemtrack->do=Auth::User()->name.' '.'visit'.' '.$exhibitionevent->name.' Event '.'at'.' '.date("Y-m-d H:i:s");
+        $systemtrack->comein_at=date("Y-m-d H:i:s");
 
-  //       $systemtrack->type='exhibitionevent';
-  //       $systemtrack->type_id=$id;
+        $systemtrack->type='exhibitionevent';
+        $systemtrack->type_id=$id;
 
-  //       $systemtrack->save();
-
-
+        $systemtrack->save();
+		 Session::put('event_id', $id);
+         Session::put('systemtrack_event_id',$systemtrack->id);
+ 		DB::table('systemtracks')
+            ->where('id', $systemtrack->id)
+            ->update(['eventid' => $id,'systemeventid'=>$systemtrack->id]);
 		return view('exhibitionevents.show',compact('exhibitionevent'));
 	}
 
@@ -211,9 +247,14 @@ class ExhibitioneventsController extends Controller {
 	    return redirect("exhibitionevents");
 	}
 
+	/**
+	 * list booths
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+
 	public function listbooths($id){
-
-
 
 
 		$booths=Booth::where('exhibition_event_id',$id)->get();
@@ -238,7 +279,10 @@ class ExhibitioneventsController extends Controller {
 		return view('VisitorCP.exhibitionevents.listbooths',compact('booths'));
 
 	}
-
+	/**
+	 * function to make event report.
+	 *
+	 */
 	
     public function eventsreport(){
 
@@ -262,8 +306,15 @@ class ExhibitioneventsController extends Controller {
 
     }
 
-    public function showEventPage($id){
+    /**
+	 * function to show event in certain page
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
 
+    public function showEventPage($id){
+		//check on event_id is exsist
     	if (Session::has('systemtrack_event_id'))
 		{
 
@@ -279,6 +330,22 @@ class ExhibitioneventsController extends Controller {
 		      }
 
 		  }
+			//check on booth_id is exsist
+		  if (Session::has('systemtrack_booth_id'))
+		{
+			$systemtrackid =Systemtrack::all() ->last()-> pluck('id');
+			$systemtrack_booth_id_value = Session::get('systemtrack_booth_id');
+			$systemtrack_booth=Systemtrack::find($systemtrack_booth_id_value);
+			if($systemtrack_booth->leave_at==null){
+
+				DB::table('systemtracks')
+            	->where('id', $systemtrack_booth_id_value)
+            	->update(['leave_at' => date("Y-m-d H:i:s")]);
+
+					//$systemtrack_booth->leave_at=date("Y-m-d H:i:s");
+		      }
+		    
+		  }
 
     	$exhibitionevent=ExhibitionEvent::find($id);
     	$booths=Booth::where('exhibition_event_id',$id)->get();
@@ -286,7 +353,7 @@ class ExhibitioneventsController extends Controller {
 		$systemtrack=new Systemtrack;
         $systemtrack->user_id=Auth::User()->id;
       //  $systemtrack->spot_id=$booth->spot_id;
-        $systemtrack->do=Auth::User()->name.' '.'visit'.' '.$booths[0]->exhibition_event->name.' Event '.'at'.' '.date("Y-m-d H:i:s");
+        $systemtrack->do=Auth::User()->name.' '.'visit'.' '.$exhibitionevent->name.' Event '.'at'.' '.date("Y-m-d H:i:s");
         $systemtrack->comein_at=date("Y-m-d H:i:s");
 
         $systemtrack->type='exhibitionevent';
@@ -298,6 +365,9 @@ class ExhibitioneventsController extends Controller {
 
         Session::put('event_id', $id);
         Session::put('systemtrack_event_id',$systemtrack->id);
+        DB::table('systemtracks')
+            ->where('id', $systemtrack->id)
+            ->update(['eventid' => $id,'systemeventid'=>$systemtrack->id]);
 
 		return view('exhibitionevents.eventpage',compact('exhibitionevent','booths'));
 

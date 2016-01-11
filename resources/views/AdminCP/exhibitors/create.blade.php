@@ -1,4 +1,4 @@
-@extends ('layouts.dashboard')
+@extends ('layouts.exhibitor')
 @section('page_heading','Add New Exhibitor')
 
 @section('section')
@@ -101,23 +101,23 @@
            
 <!-- File Upload -->
 
-            <h1>File Upload</h1>
+            <!-- <h1>File Upload</h1>
 
-            <div class="form-group has-success">
+            <div class="form-group has-success"> -->
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> File Name</label>
+               <!-- <label> File Name</label>
                 <input type="text" name="filename" class="form-control" id="inputSuccess">
             </div>
 
-            <div class="form-group has-success">
+            <div class="form-group has-success"> -->
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> Description</label>
+               <!-- <label> Description</label>
                 <textarea name="filedesc" class="form-control" id="inputSuccess"></textarea>
             </div>
 
-            <div class="form-group has-success">
+            <div class="form-group has-success"> -->
                <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->
-               <label> Type </label>
+               <!-- <label> Type </label>
                 <input type="text" name="filetype" class="form-control" id="inputSuccess">
             </div>
 
@@ -128,13 +128,13 @@
               <input type="file" name="file">
             </div>
           </div>
-            
+            -->
       
             
             
          <button> Add </button>
          {{ Form::close() }}
         <p>For complete documentation, please visit <a href="http://getbootstrap.com/css/#forms">Bootstrap's Form Documentation</a>.</p>
-   
+    
 
 @stop

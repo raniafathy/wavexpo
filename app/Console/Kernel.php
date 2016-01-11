@@ -2,17 +2,20 @@
 //use Illuminate\Http\Request;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-
 use Auth;
 use App\User;
 use Session;
-// use App\Console\Commands\checkuser;
 use DateTime;
 use DB;
+use Redirect;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\Http\Controllers;
 class Kernel extends ConsoleKernel {
+
+//protected $auth;
+		
+
 
 	/**
 	 * The Artisan commands provided by your application.
@@ -29,11 +32,8 @@ class Kernel extends ConsoleKernel {
 	 * Define the application's command schedule.
 	 *
 	 * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-	 * @return void
+	 * @return voidreturn redirect()->action('HomeController@index');
 	 */
-
-
-
 
 
 
@@ -42,9 +42,8 @@ class Kernel extends ConsoleKernel {
 		$schedule->command('inspire')
 				 ->hourly();
 
-		 $schedule->command('check:user');
-
-
+$schedule->call('App\Http\Controllers\HomeController@outFromSystem')->everyMinute();
+	
 	}
 
 }

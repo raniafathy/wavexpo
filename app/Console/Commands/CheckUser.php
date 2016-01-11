@@ -34,6 +34,7 @@ class CheckUser extends Command {
 	public function __construct()
 	{
 		parent::__construct();
+
 	}
 
 	/**
@@ -44,8 +45,8 @@ class CheckUser extends Command {
 	public function fire()
 	{
 
-		 \Log::info($this->checkUser());
-		//$this->checkUser();
+		 //\Log::info($this->checkUser());
+		$this->checkUser();
 		//$this->info(checkUser());
 	}
 
@@ -80,18 +81,22 @@ class CheckUser extends Command {
 
 
 				$value='hi';
-				echo "hi";
+				//echo "hi";
 				$now = new DateTime(date("Y-m-d H:i:s"));
 
 				      //  $request = new Request();
 
 
-				if (Session::has('clientTime')) {
+				//if (Session::has('clientTime')) {
     //
-			echo "hi";
+			//echo "hi";
 
 
 		        $time=Session::get('clientTime');
+
+		        DB::table('types')->insert(
+			 	    ['name' => 'hi', 'price' => $now]
+			 	);
 
 
 				$diff1 = $time->diff($now);
@@ -139,11 +144,12 @@ class CheckUser extends Command {
 			        ->where('user_id', $userId)
 			        ->where('login_at', $maxLogin) 
 			        ->update(['logout_at' => $now]);
+				return redirect('/auth/logout');
 
 			 
-			   Auth::logout();
+			  // Auth::logout();
     }
-}
+//}
 
 //return $value;
 

@@ -1,4 +1,4 @@
-@extends ('layouts.dashboard')
+@extends ('layouts.exhibitor')
 @section('page_heading','Add New Exhibitor')
 
 @section('section')

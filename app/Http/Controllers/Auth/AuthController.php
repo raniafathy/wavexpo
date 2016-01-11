@@ -52,11 +52,16 @@ class AuthController extends Controller {
 
 	
 		
-	$this->middleware('guest', ['except' => ['getLogout','createuser','createRegister','confirm']]);
+	$this->middleware('guest', ['except' => ['getLogout','registerRedirect','createuser','createRegister','confirm']]);
 	
 
 
 }		
+
+	/**
+	 * Create a new user using register page.
+	 *
+	 */
 	
 	public function createRegister(){
 
@@ -64,7 +69,10 @@ class AuthController extends Controller {
 		$interests= Interest::all();
 		return view('index', compact('countries','interests'));
 	}
-
+	/**
+	 * Create a new user using register page and store data in this function.
+	 *
+	 */
 	public function createuser()
 	{
 		
@@ -99,12 +107,12 @@ class AuthController extends Controller {
 			$gInfo->skypename=Request::get('skypename');
 			$gInfo->howhearaboutus=Request::get('howhearaboutus');
 			$gInfo->dob=Request::get('dob');
-			if (Request::hasFile('image')) { 
-				$destination= 'uploads/';
-				$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
-				Request::file('image')->move($destination,$imagename);
-				$gInfo->image=$imagename;
-			}
+			// if (Request::hasFile('image')) { 
+			// 	$destination= 'uploads/';
+			// 	$imagename=str_random(6)."_".Request::file('image')->getClientOriginalName();
+			// 	Request::file('image')->move($destination,$imagename);
+			// 	$gInfo->image=$imagename;
+			// }
 			$gInfo->save();
 
 			$userInterest = new UserInterest();
@@ -148,17 +156,20 @@ class AuthController extends Controller {
 	        $data['confirmation_code']= $confirmation_code;
 
 
-		 Mail::send('emails.welcome', $data, function($message) use ($data)
+		Mail::send('emails.welcome', $data, function($message) use ($data)
           {
                 $message->from('raniafathyhowig@gmail.com', "Wavexpo");
                 $message->subject("Welcome to Wavexpo Please visit our website to continu you information");
                $message->to($data['email']);
          });
-
-				
-			return redirect('users');
+		return redirect('/register/redirect');	
 	    }
 	}
+
+	/**
+	 * function to confirm user.
+	 *
+	 */
 
 public function confirm($confirmation_code)
     {

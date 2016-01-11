@@ -226,7 +226,11 @@ class CompaniesController extends Controller {
 	    return redirect("companies");
 	}
 
-
+	/**
+	 * list all exhibitor for certain company
+	 * @param  integer $id
+	 * @return Response
+	 */
 
 	public function listallexhibitorsofCompany($id){
 
@@ -236,12 +240,24 @@ class CompaniesController extends Controller {
 
 	}
 
+	/**
+	 * create company info by admin
+	 * @param  integer $id
+	 * @return Response
+	 */
+
 	public function createcompanybyadmin(){
 
 		$countries=Country::all();
 		return view('AdminCP.companies.create',compact('countries'));
 
 	}
+
+	/**
+	 * save company data by admin
+	 * @param  integer $id
+	 * @return Response
+	 */
 
 	public function storecompanybyadmin(){
 
@@ -298,24 +314,24 @@ class CompaniesController extends Controller {
 
 		     // File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('filedesc');
-		    $file->type=Request::get('filetype');
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
-            $file->save();
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('filedesc');
+		 //    $file->type=Request::get('filetype');
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
+   //          $file->save();
 
-            $userfile= new CompanyFile;
-            $userfile->company_id=$company->id;
-            $userfile->file_id=$file->id;
-            $userfile->save();
+   //          $userfile= new CompanyFile;
+   //          $userfile->company_id=$company->id;
+   //          $userfile->file_id=$file->id;
+   //          $userfile->save();
 
 
 			//return redirect('users');
@@ -328,16 +344,28 @@ class CompaniesController extends Controller {
 		}
 	}
 
+	/**
+	 * show profile when log in as acompany
+	 * @param  integer $id
+	 * @return Response
+	 */
+
 	public function showprofile($id){
 
 
 		$user=User::find($id);
 		$company=Company::where('user_id',$user->id)->get();
 		$company=$company[0];
-		return view('companies.show',compact('company'));
+		return view('companies.showprofile',compact('company'));
 
 	}
 
+	
+	/**
+	 * show exhibitors for company using user id
+	 * @param  integer $id
+	 * @return Response
+	 */
 	public function showexhibitorsofcompanybyuserid($id){
 
 	   $user=User::find($id);
@@ -350,6 +378,12 @@ class CompaniesController extends Controller {
 
 
 	}
+
+	/**
+	 * list booth of certain company in certain events
+	 * @param  integer $id
+	 * @return Response
+	 */
 
 	public function listboothsofcompanyinthisevent($id){
 
@@ -381,6 +415,26 @@ class CompaniesController extends Controller {
 	       return view('booths.index',compact('booths'));
 
      
+	}
+
+
+
+	/**
+	 * redirect user to view the pageredirect
+	 * @param  integer $id
+	 * @return Response
+	 */
+
+	public function editShowProfile($id)
+	{
+		//authorization
+		if (!$this->adminAuth() && !$this->companyAuth(Auth::User()->id)){
+			return view('errors.404');
+		}
+	    $countries=Country::all();
+		$company=Company::find($id);
+		return view('companies.editprofile',compact('company','countries'));
+		
 	}
 
 }

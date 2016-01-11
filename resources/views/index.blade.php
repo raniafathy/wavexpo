@@ -201,10 +201,10 @@
 							                <input name="address" class="form-control" value="{{old('address')}}">
 							            </div>
 
-							            <div class ="form-group has-success">
+							            <!-- <div class ="form-group has-success">
 							              <label>Upload Image</label>
 							              <input type="file" name="image">
-							            </div>
+							            </div> -->
 
 							             <div class="form-group has-success">
 							               <!--  <label class="control-label" for="inputSuccess">Input with success</label> -->

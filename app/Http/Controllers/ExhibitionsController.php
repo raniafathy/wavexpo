@@ -103,24 +103,24 @@ class ExhibitionsController extends Controller {
 
 			 // File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('filedesc');
-		    $file->type=Request::get('filetype');
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
-            $file->save();
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('filedesc');
+		 //    $file->type=Request::get('filetype');
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
+   //          $file->save();
 
-            $userfile= new ExhibitionFile;
-            $userfile->exhibition_id=$exhibition->id;
-            $userfile->file_id=$file->id;
-            $userfile->save();
+   //          $userfile= new ExhibitionFile;
+   //          $userfile->exhibition_id=$exhibition->id;
+   //          $userfile->file_id=$file->id;
+   //          $userfile->save();
 
 
 			return redirect('exhibitions');

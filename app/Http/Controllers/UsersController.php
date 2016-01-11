@@ -544,7 +544,7 @@ class UsersController extends Controller {
 			        return redirect('companies');
 
 			    }
-			return redirect('users');
+			return redirect('/register/redirect');
 	    }
 	}
 

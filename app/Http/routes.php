@@ -91,15 +91,9 @@ Route::get('/company', function()
 {
 	return View::make('company');
 });
-
 Route::get('/company/user', function()
 {
-	return View::make('exhibitor');
-});
-
-Route::get('/show/exhibitorpage', function()
-{
-	return View::make('showexhibitorpage');
+	return View::make('layouts.exhibitor');
 });
 
 Route::get('/register', array('as' => 'user.createRegister', 'uses' => 'Auth\AuthController@createRegister'));
@@ -112,7 +106,10 @@ Route::get('/documentation', function()
 {
 	return View::make('documentation');
 });
-
+Route::get('/verify', function()
+{
+	return View::make('registerredirect');
+});
 
 /*********************************Route*******************/
 
@@ -142,6 +139,8 @@ Route::get('/users/listadmin','UsersController@listalladmin');
 
 Route::get('/users/listallsuperadmin','UsersController@listallsuperadmin');
 
+Route::get('/register/redirect','CompaniesController@editShowProfile');
+
 Route::resource('/users','UsersController');
 
 Route::resource('/spots','SpotsController');
@@ -162,6 +161,8 @@ Route::get('/companies/showexhibitorsofcompanybyuserid/{id}','CompaniesControlle
 
 Route::get('/companies/showprofile/{id}','CompaniesController@showprofile');
 
+Route::get('/companies/editshowprofile/{id}','CompaniesController@editShowProfile');
+
 Route::get('/companies/createcompanybyadmin','CompaniesController@createcompanybyadmin');
 
 Route::post('/companies/storecompanybyadmin','CompaniesController@storecompanybyadmin');
@@ -171,6 +172,10 @@ Route::resource('/companies','CompaniesController');
 Route::get('companies/listallexhibitorsofCompany/{id}','CompaniesController@listallexhibitorsofCompany');
 
 Route::get('/exhibitors/createexhibitorbyadmin','ExhibitorsController@createexhibitorbyadmin');
+
+Route::get('/exhibitors/editcompanyexhibitor/{id}','ExhibitorsController@editCompanyExhibitor');
+
+Route::delete('/exhibitors/deletecompanyexhibitor/{id}','ExhibitorsController@destroyCompanyExhibitor');
 
 Route::post('/exhibitors/storeexhibitorbyadmin','ExhibitorsController@storeexhibitorbyadmin');
 

@@ -17,7 +17,7 @@
 
 
 </head>
-<body onmousemove="logTest()"  onbeforeunload=" close()">
+<body onmousemove="logTest()">
 
 
 
@@ -61,10 +61,5 @@ function logTest(){
 
 }
 
-function close(){
-
-return 'Dialog text here.';
-
-}
 </script>
 </html>

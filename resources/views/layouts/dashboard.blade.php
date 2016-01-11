@@ -10,220 +10,6 @@
 <script type="text/javascript">
 
 
-// window.setInterval(function(){ 
-    
-//      $.ajax({
-//         url: '/home/outFromSystem' ,
-//         type: 'POST',
-//         data: {  
-             
-//             },
-//         success: function(result) {
-
-//             if(result.indexOf("fail") > -1){
-
-//                     console.log(result);
-
-
-//             }else{
-//             document.getElementsByTagName("body")[0].style.visibility='hidden';
-
-//             document.getElementById('login-screen').style.visibility='visible';
-//             window.location="http://localhost:8000/auth/login";
-
-
-//             }
-//                     console.log(result);
-//                     //alert(result);
-//                   },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//                     console.log(errorThrown);
-//                }
-//     });
-
-
-// }, 60*1000);
-
-
-
-
-
-
-
-
- function test(){
-
-
-var count=0;
-
-count= count+1;
-
-//alert(count);
-
-
-}
-
-// window.setInterval(function(){
-//     // alert();
-// var body = document.getElementsByTagName("body")[0];
-
-// body.addEventListener("onbeforeunload", add());
-
-// function add() {
-//         alert("it works!");
-// };
-                    
-//                              
-
-                  
-
-
-// }, 3*60*1000);
-
-
- // $(document).ready(function(){
-
- //     $('a').on('mousedown', stopNavigate);
-
- //     $('a').on('mouseleave', function () {
- //            $(window).on('beforeunload', function(){
- //       return 'Are you sure you want to leave?';
- // });
-
- // $(window).on('unload', function(){
-
- //          logout();
- // });
- //     });
-
-
-
- // });
-
- // function stopNavigate(){    
- //     $(window).off('beforeunload');
- // }
-//////////////////////////////////////////////////////////////////
-//  window.onload = function() {
-    
-//              $.ajaxSetup({
-//                  headers: {
-//                      'X-XSRF-Token': $('meta[name="_token"]').attr('content')
-//                  }
-//              });
-//              alert('window closed');
-//              $.ajax({
-//           url: '/home/outFromSystem' ,
-//           type: 'POST',
-//           data: {  
-             
-//             },
-//          success: function(result) {
-//               //document.getElementById('login-table').innerHtml=result;
-//               var winH = $(window).height();
-//         var winW = $(window).width();
-// var blurDiv = document.createElement("div");
-// blurDiv.id = "blurDiv";
-// blurDiv.style.cssText = "position:absolute; top:0; z-index:1005; right:0; width:"+ winW +"; height:"+ winH +"; background-color: #000000; opacity:0.5; filter:alpha(opacity=50)";
- 
-// document.getElementsByTagName("body")[0].appendChild(blurDiv);
-
-//               $( "#login-form" ).dialog()
-             
-
-
-
-//                       console.log(result);
-//                       alert(result);
-//                     },
-//           error: function(jqXHR, textStatus, errorThrown) {
-//                     console.log(errorThrown);
-//                     alert(errorThrown);
-
-//               }
-//     });
-
-//   };
-
-//////////////////////////////////////////////////////////////////////
-
-
-// setInterval(function(){ 
-    
-//      $.ajax({
-//         url: '/home/outFromSystem' ,
-//         type: 'POST',
-//         data: {  
-             
-//             },
-//         success: function(result) {
-//                     console.log(result);
-//                   },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//                     console.log(errorThrown);
-//                }
-//     });
-
-
-// }, 50000);
-
-    
-// window.onbeforeunload = function () {
-
-// alert('jj'); 
-
-//   $.ajax({
-//         url: '/home/outFromSystem' ,
-//         type: 'POST',
-//         data: {  
-             
-//             },
-//         success: function(result) {
-//                     console.log(result);
-//                   },
-//         error: function(jqXHR, textStatus, errorThrown) {
-//                     console.log(errorThrown);
-//                }
-
-
-//        // alert('You have gone away!');
-
-
-//     });
-        
-   
- // }
-
-
-
-/////////////////////////////////////////////////////////////////
-
-
-// $(document).ready(function(){
-
-//     $('a').on('mousedown', stopNavigate);
-
-//     $('a').on('mouseleave', function () {
-//            $(window).on('beforeunload', function(){
-//                   return 'Are you sure you want to leave?';
-//            });
-//     });
-// });
-
-// function stopNavigate(){    
-//     $(window).off('beforeunload');
-// }
-// And to get the Leave message alert will be,
-
-// $(window).on('beforeunload', function(){
-//       return 'Are you sure you want to leave?';
-// });
-
-// $(window).on('unload', function(){
-
-//          logout();
-
-// });
 
 </script>
 
@@ -270,7 +56,22 @@ count= count+1;
 
 
 
-</div>
+@if(Auth::User()->confirmed==0 && Auth::User()->type=='regular')
+
+<h2>
+    
+Please, Check your Email And Verfiy It First
+
+</h2>
+
+@elseif(Auth::User()->confirmed==0 && Auth::User()->type=='company')
+
+<h2>
+    
+Please, Check your Email And Verfiy It First
+
+</h2>
+@endif
 <div id="wrapper">
 
 
@@ -518,8 +319,6 @@ count= count+1;
                             <!-- /input-group -->
                          
                         </li>
-
-
 @if(Auth::User()->type=='admin'||Auth::User()->type=='regular'||Auth::User()->type=='company')
                        
                         <li>
@@ -542,12 +341,10 @@ count= count+1;
                        
 @endif
 
-
-
- <!-- @if(Auth::User()->type=='company')
+<!-- @if(Auth::User()->type=='company')
 
                         <li {{ (Request::is('*showprofile') ? 'class="active"' : '') }}>
-                            <a href="/companies/showprofile/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> Company Profile Info</a>
+                            <a href="/companies/showprofile/{{ Auth::User()->id }}"><i class="fa fa-dashboard fa-fw"></i> Profile Info</a>
                         </li>
 
                          <li {{ (Request::is('*showprofile') ? 'class="active"' : '') }}>
@@ -559,7 +356,7 @@ count= count+1;
                         </li>
 
 
-@endif  -->
+@endif -->
 
 @if(Auth::User()->type=='admin')  
 

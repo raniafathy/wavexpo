@@ -259,7 +259,11 @@ class ExhibitorsController extends Controller {
 	    return redirect("exhibitors");
 	}
 
-
+	/**
+	 * create exhibitor by admin
+	 * 
+	 * @return Response
+	 */
 	public function createexhibitorbyadmin(){
 
 		$countries=Country::all();
@@ -267,6 +271,12 @@ class ExhibitorsController extends Controller {
 		return view('AdminCP.exhibitors.create',compact('countries','companies'));
 
 	}
+
+	/**
+	 * store exhibitor by admin
+	 * 
+	 * @return Response
+	 */
 
 	public function storeexhibitorbyadmin(){
 
@@ -300,27 +310,27 @@ class ExhibitorsController extends Controller {
 
 		   // File Storage 
 
-	        $file = new File;
-		    $file->name=Request::get('filename');
-		    $file->desc=Request::get('filedesc');
-		    $file->type=Request::get('filetype');
+	  //       $file = new File;
+		 //    $file->name=Request::get('filename');
+		 //    $file->desc=Request::get('filedesc');
+		 //    $file->type=Request::get('filetype');
 
-			if (Request::hasFile('file')) { 
-				$destination='files/';
-				$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
-				Request::file('file')->move($destination,$filename);
-				$file->file=$filename;
-			}else{
-				$file->file=Request::get('file');
-			}
+			// if (Request::hasFile('file')) { 
+			// 	$destination='files/';
+			// 	$filename=str_random(6)."_".Request::file('file')->getClientOriginalName();
+			// 	Request::file('file')->move($destination,$filename);
+			// 	$file->file=$filename;
+			// }else{
+			// 	$file->file=Request::get('file');
+			// }
 
 
-            $file->save();
+   //          $file->save();
 
-            $exhibitorfile= new ExhibitorFile;
-            $exhibitorfile->exhibitor_id=$exhibitor->id;
-            $exhibitorfile->file_id=$file->id;
-            $exhibitorfile->save();
+   //          $exhibitorfile= new ExhibitorFile;
+   //          $exhibitorfile->exhibitor_id=$exhibitor->id;
+   //          $exhibitorfile->file_id=$file->id;
+   //          $exhibitorfile->save();
 
             // Admin
             if($this->adminAuth()){
@@ -341,9 +351,41 @@ class ExhibitorsController extends Controller {
 			
 			
 	    }
-
-
 	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function editCompanyExhibitor($id)
+	{
+		//
+		
+	    $countries=Country::all();
+		$exhibitor=Exhibitor::find($id);
+		//authorization
+		if (!$this->adminAuth() && !$this->companyAuth($exhibitor->company->user->id)){
+			return view('errors.404');
+		}
+		return view('exhibitors.editcompanyexhibitor',compact('exhibitor','countries'));
+	}
+
+	/**
+	 * destroy company exhibitor when log in as company
+	 * @param  integer $id
+	 * @return Response
+	 */
+
+	public function destroyCompanyExhibitor($id)
+	{
+		//
+		$exhibitorId = Request::get('id');
+	    Exhibitor::where('id',$exhibitorId)->delete();
+	    return redirect("/companies/showexhibitorsofcompanybyuserid/".Auth::User()->id );
+	}
+	
 
 
 }

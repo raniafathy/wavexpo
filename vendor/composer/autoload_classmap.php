@@ -6,9 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddAttrtologoutToTracklogin' => $baseDir . '/database/migrations/2016_01_10_144801_add_attrtologout_to_tracklogin.php',
+    'AddColumnsToSystemtrack' => $baseDir . '/database/migrations/2016_01_11_122801_add_columns_to_systemtrack.php',
     'AddDmakerColumn' => $baseDir . '/database/migrations/2015_12_21_133922_add_Dmaker_column.php',
     'AddLikedToUserFiles' => $baseDir . '/database/migrations/2015_12_15_114850_add_liked_to_user_files.php',
+    'AddSessionToTracklogin' => $baseDir . '/database/migrations/2016_01_10_094132_add_session_to_tracklogin.php',
     'AddToUser' => $baseDir . '/database/migrations/2015_12_20_122233_add_to_user.php',
+    'AddUseridToTracklogin' => $baseDir . '/database/migrations/2016_01_10_104315_add_userid_to_tracklogin.php',
     'ChangeDmakerColumn' => $baseDir . '/database/migrations/2015_12_21_133313_change_Dmaker_Column.php',
     'CreateActivitiesTable' => $baseDir . '/database/migrations/2015_08_31_115348_create_activities_table.php',
     'CreateBoothFilesTable' => $baseDir . '/database/migrations/2015_10_20_084239_create_booth_files_table.php',

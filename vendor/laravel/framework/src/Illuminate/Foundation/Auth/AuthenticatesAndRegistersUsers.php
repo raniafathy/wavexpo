@@ -114,6 +114,13 @@ trait AuthenticatesAndRegistersUsers {
 			Session::put('sessiontimer', date("Y-m-d H:i:s"));
 			if (Auth::user()->type == 'company') {
 
+		$userId=Auth::user()->id;
+		$tracklogin = new Tracklogin();
+		$tracklogin->user_id=$userId;
+		$now = new DateTime();
+		$tracklogin->login_at=$now;
+		$tracklogin->save();
+
 					return redirect('/company');
 
 					}      
